@@ -1,0 +1,37 @@
+﻿<Properties StartupConfiguration="{0B3CE347-DC6B-7C8C-24FA-7DAF5C2AEC98}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ShipCollider.cs">
+    <Files>
+      <File FileName="Assets/Scripts/PredictionManager.cs" Line="62" Column="66" />
+      <File FileName="Assets/Scripts/ShipHelper.cs" Line="3" Column="1" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="207" Column="24" />
+      <File FileName="Assets/Scripts/ShipManager.cs" Line="59" Column="6" />
+      <File FileName="Assets/Scripts/Levels/Level0.cs" Line="107" Column="6" />
+      <File FileName="Assets/Scripts/LaunchButton.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Singleton.cs" />
+      <File FileName="Assets/Scripts/ExplodeObject.cs" />
+      <File FileName="Assets/Scripts/SpawnChunkedShip.cs" />
+      <File FileName="Assets/Scripts/ShipCollider.cs" Line="27" Column="12" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Planet Loop V2" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Levels" expanded="True" />
+                <Node name="ShipCollider.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c3d120fc-3ad3-44c6-83e1-07bfc846b6a9" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
