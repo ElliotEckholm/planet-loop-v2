@@ -7,11 +7,12 @@ public class SpawnChunkedShip : MonoBehaviour
 
   
     public GameObject ship;
-    public GameObject chunckedShip;
-    
+    public GameObject chunkedShip;
+
 
     private void FixedUpdate()
     {
+        //Debug.Log(ShipManager.shipCollision);
         if (ShipManager.shipCollision)
         {
 
@@ -21,7 +22,7 @@ public class SpawnChunkedShip : MonoBehaviour
                 Destroy(ship);
 
 
-                GameObject _chunckedShip = Instantiate(chunckedShip, ship.transform.position, ship.transform.rotation) as GameObject;
+                GameObject _chunckedShip = Instantiate(chunkedShip, ship.transform.position, ship.transform.rotation) as GameObject;
 
                 foreach (Transform trans in _chunckedShip.transform)
                 {
@@ -38,9 +39,44 @@ public class SpawnChunkedShip : MonoBehaviour
 
                 ShipManager.shipCollision = false;
             }
-           
+
         }
-        
+
+
+
+
+    //private void Update()
+    //{
+    //    //Debug.Log(ShipManager.shipCollision);
+    //    if (ShipManager.shipCollision)
+    //    {
+
+    //        if (ship)
+    //        {
+    //            Vector3 currentShipVelocity = ship.GetComponent<Rigidbody>().velocity;
+    //            Destroy(ship);
+
+
+    //            GameObject _chunckedShip = Instantiate(chunkedShip, ship.transform.position, ship.transform.rotation) as GameObject;
+
+    //            foreach (Transform trans in _chunckedShip.transform)
+    //            {
+    //                var rb = trans.GetComponent<Rigidbody>();
+
+    //                if (rb != null)
+    //                {
+    //                    rb.velocity = currentShipVelocity;
+    //                }
+    //            }
+
+
+    //            _chunckedShip.GetComponent<ExplodeObject>().Explode();
+
+    //            ShipManager.shipCollision = false;
+    //        }
+
+    //    }
+
 
 
     }

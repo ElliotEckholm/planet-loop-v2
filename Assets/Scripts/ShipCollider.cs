@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShipCollider : MonoBehaviour
 {
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,24 +19,22 @@ public class ShipCollider : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Is game over");
+        //Debug.Log("Is game over");
 
         //if (name == "Ship")
         //{
         //    ShipManager.shipCollision = true;
 
         //}
-        //if (name.Contains("FakeShip"))
-        //{
-        //    ShipManager.fakeShipCollision = true;
-        //}
 
+        //Debug.Log(collision.gameObject.name);
 
         // Win level by hitting planet 1
-        if (collision.gameObject.name == "Planet1")
+        if (collision.gameObject.name.Contains("Planet1"))
         {
-            GameManager.isGameOver = true;
-            Debug.Log("Is game over");
+            
+            DestroyShip(name);
+            
             //Debug.Log("collision  = " + collision.gameObject.name);
             //GameManager.LevelComplete = true;
         }
@@ -46,5 +45,21 @@ public class ShipCollider : MonoBehaviour
         //}
         //if (collision.relativeVelocity.magnitude > 2)
 
+    }
+
+    private void DestroyShip(string name)
+    {
+
+        // Destory fake ship
+        if (name.Contains("FakeShip"))
+        {
+            Destroy(this.gameObject);
+        }
+        // Destory real ship 
+        else
+        {
+            GameManager.isGameOver = true;
+            ShipManager.shipCollision = true;
+        }
     }
 }

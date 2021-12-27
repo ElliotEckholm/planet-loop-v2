@@ -10,7 +10,9 @@ public class ShipHelper : MonoBehaviour
     // Variable shared with other classes
     public static Vector3 launchForce;
     public static float launchForceDampening = 0.25F;
-    public static float launchMagnitude;
+    // public static float launchMagnitude;
+    public static Vector3 launchDirection;
+    public static Vector3 rotationDirection;
 
     
 
@@ -22,21 +24,48 @@ public class ShipHelper : MonoBehaviour
             Time.timeScale = 1f;
     }
 
+    public static void rotateShip(GameObject ship)
+    {
+        // if ()
+        // Vector3 mousePosition = getCurrentMousePosition().GetValueOrDefault();
+
+        if (ship != null && !PanelPlayUI.buttonEntered)
+        {
+            GameObject planet = GameObject.Find("Earth");
+            //Debug.Log(planet);
+            // Vector3 mousePosition = getCurrentMousePosition().GetValueOrDefault();
+
+            Vector3 ballToCursor = rotationDirection - planet.transform.position;
+            ship.transform.rotation = Quaternion.FromToRotation(Vector3.forward, ballToCursor);
+
+            float radius = planet.GetComponent<SphereCollider>().radius * planet.transform.localScale.x;
+            ship.transform.position = planet.transform.position + ballToCursor.normalized * radius;
+           
+        }
+    }
+
 
     public static Vector3 calculateLaunchForce(GameObject ship)
     {
-        Vector3 initialPosition = ship.GetComponent<Rigidbody>().position;
-        Vector3 releasePosition = getCurrentMousePosition().GetValueOrDefault();
-
+        // Vector3 initialPosition = ship.GetComponent<Rigidbody>().position;
+        // Vector3 releasePosition = getCurrentMousePosition().GetValueOrDefault();
+        
+        // Debug.Log("launchDirection = " + launchDirection);
         // Get direction of launch aim
-        Vector3 launchDirection = releasePosition - initialPosition;
+        // Vector3 launchDirection = releasePosition - initialPosition;
         // Calculate length of launch aim line
-        float launchMagnitudeRaw = (float)Math.Pow(Math.Pow(releasePosition.x - initialPosition.x, 2) +
-                Math.Pow(releasePosition.y - initialPosition.y, 2), 0.05);
+        // float launchMagnitudeRaw = (float)Math.Pow(Math.Pow(launchDirection.x - initialPosition.x, 2) +
+        //         Math.Pow(launchDirection.y - initialPosition.y, 2), 0.05);
         // Calculate magnitude of launch aiml ine
-        launchMagnitude = (float)Mathf.Round(launchMagnitudeRaw * 10.0f) * 0.1f;
+        // launchMagnitude = (float)Mathf.Round(launchMagnitudeRaw * 10.0f) * 0.1f * 100.0f;
+        
+        // Debug.Log("launchDirection = " + launchDirection);
+        // Debug.Log("MagnitudeSlider.magnitudeSliderForce = " + MagnitudeSlider.magnitudeSliderForce);
+        // Debug.Log("launchForceDampening = " + launchForceDampening);
+        launchForce = launchDirection; // * (MagnitudeSlider.magnitudeSliderForce * 0.25f); // * launchForceDampening;
 
-        launchForce = launchDirection * launchMagnitude * launchForceDampening;
+        // Debug.Log(launchForce);
+
         return launchForce;
     }
 
@@ -44,14 +73,36 @@ public class ShipHelper : MonoBehaviour
     public static void drawLaunchLine(GameObject ship, LineRenderer launchAimLine)
     {
         // Draw line from ship to cursor
-        Vector3 initialLinePosition = ship.GetComponent<Rigidbody>().position;
-        launchAimLine.SetPosition(0, initialLinePosition);
+        // Start point
+        Vector3 startPoint = ship.GetComponent<Rigidbody>().position;
+        launchAimLine.SetPosition(0, startPoint);
         launchAimLine.SetVertexCount(1);
-        Vector3 releasePosition = getCurrentMousePosition().GetValueOrDefault();
+        
+        // End point
+        Vector3 mousePosition = getCurrentMousePosition().GetValueOrDefault();
+        // mousePosition = new Vector3(mousePosition.x * 10000, mousePosition.y * 10000, mousePosition.z * 10000);
 
+        float radius = 30.0f;
+
+        Vector3 endpoint =
+            Vector3.MoveTowards(
+            startPoint, 
+            mousePosition,
+            1000000000.0f);
         launchAimLine.SetVertexCount(2);
-        launchAimLine.SetPosition(1, releasePosition);
+        launchAimLine.SetPosition(1, endpoint);
+        
         launchAimLine.enabled = true;
+        // launchAimLine.forceRenderingOff = true;
+        launchDirection = endpoint;
+        rotationDirection = mousePosition;
+        Debug.Log("current ship position = " + startPoint );
+        Debug.Log("launchDirection = " + launchDirection);
+        Debug.Log("mousePosition = " + mousePosition);
+        Debug.Log("launchForce = " + launchForce);
+        float angle = Vector3.Angle(startPoint, launchDirection);
+
+        Debug.Log("launch angle = " + angle);
 
     }
 
@@ -59,6 +110,8 @@ public class ShipHelper : MonoBehaviour
     public static void launchShip(GameObject ship, LineRenderer launchAimLine)
     {
         launchAimLine.enabled = false;
+        
+        Debug.Log("LAUNCHING SHIP = " + launchForce);
 
         ship.GetComponent<Rigidbody>().AddForce(launchForce, ForceMode.VelocityChange);
         LaunchButton.launchButtonClicked = false;

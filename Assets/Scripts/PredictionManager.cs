@@ -3,10 +3,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-
 public class PredictionManager : MonoBehaviour
 {
-
     public GameObject realShip;
     public GameObject fakeShipVariant;
     private GameObject fakeShip;
@@ -26,7 +24,6 @@ public class PredictionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         planets = GameManager.currentLevelObjects;
 
         predicitionSceneName = "prediction";
@@ -40,30 +37,33 @@ public class PredictionManager : MonoBehaviour
             GameObject fakePlanet = Instantiate(planet, planet.transform.position, planet.transform.rotation);
             SceneManager.MoveGameObjectToScene(fakePlanet, predictionScene);
         }
-
     }
 
     void FixedUpdate()
     {
-
-
         predictionPhysicsScene.Simulate(Time.fixedDeltaTime * 5);
         currentPhysicsScene.Simulate(Time.fixedDeltaTime);
 
 
         if (fakeShip)
         {
-
             ShipHelper.applyPlanetForces(fakeShip, planets);
 
-            predictionPoint = Instantiate(predictionPoint);
-            SceneManager.MoveGameObjectToScene(predictionPoint, predictionScene);
-            predictionPoint.transform.position = fakeShip.transform.position;
+            // Place trajectory point on fake ship's path
+            //predictionPoint = Instantiate(predictionPoint);
+            //SceneManager.MoveGameObjectToScene(predictionPoint, predictionScene);
+            //predictionPoint.transform.position = fakeShip.transform.position;
+
             // Angle ship to forward direction of ship's velocity
             Vector3 shipVelocity = fakeShip.GetComponent<Rigidbody>().velocity;
             if (shipVelocity != new Vector3(0, 0, 0))
             {
                 fakeShip.GetComponent<Rigidbody>().transform.forward = shipVelocity;
+            }
+
+            if (LaunchButton.launchButtonClicked)
+            {
+                fakeShip.GetComponent<TrailRenderer>().enabled = false;
             }
         }
 
@@ -81,7 +81,6 @@ public class PredictionManager : MonoBehaviour
             predict = false;
         }
 
-        
 
         Level0.LevelRotations();
     }
@@ -89,7 +88,6 @@ public class PredictionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         ShipHelper.isGamePaused();
 
         //If mouse is clicked and cursor is not on any buttons
@@ -97,12 +95,10 @@ public class PredictionManager : MonoBehaviour
         {
             predict = true;
         }
-
     }
 
     void CreatePredictionPoint()
     {
-        
     }
 
     void CreateAndLaunchFakeShip()
@@ -113,7 +109,6 @@ public class PredictionManager : MonoBehaviour
         Renderer fakeRenderer = fakeShip.GetComponent<Renderer>();
         fakeRenderer.enabled = true; // Boolean to render the fake ship or not during play mode
         fakeShip.GetComponent<Rigidbody>().AddForce(ShipHelper.launchForce, ForceMode.VelocityChange);
-
     }
 
     void DestroyFakeShip()
@@ -121,5 +116,4 @@ public class PredictionManager : MonoBehaviour
         float delay = 3f;
         Destroy(fakeShip, delay);
     }
-
 }

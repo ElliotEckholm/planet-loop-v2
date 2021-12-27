@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ship: {fileID: 6348317533240607840}
-  chunckedShip: {fileID: 3232802911596672734, guid: 84e737468040a4f2db60a4418393157d,
+  chunkedShip: {fileID: 4536558570111787759, guid: 8fb58d017177348bd8a2aede7ff739af,
     type: 3}
 --- !u!114 &1378801619663654516
 MonoBehaviour:
@@ -154,19 +154,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!135 &1352385463
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8598522638173689462}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.04385215
-  m_Center: {x: -0.0003562346, y: -0.0005746633, z: -0.0000014975667}
 --- !u!1001 &301830052
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -505,7 +492,7 @@ PrefabInstance:
     - target: {fileID: 1448164538907639944, guid: b8482f06fbfdf4c9e91708240fcd8972,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.9
+      value: -14.9
       objectReference: {fileID: 0}
     - target: {fileID: 1448164538907639944, guid: b8482f06fbfdf4c9e91708240fcd8972,
         type: 3}
@@ -582,6 +569,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Constraints
       value: 126
+      objectReference: {fileID: 0}
+    - target: {fileID: 3704524197903605500, guid: 846ff44e6309d405c82e4399a4a14f7d,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4999768460823469000, guid: 846ff44e6309d405c82e4399a4a14f7d,
         type: 3}

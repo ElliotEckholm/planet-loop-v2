@@ -239,7 +239,7 @@ public class GameManager : MonoBehaviour
                 }
                 if (_currentLevel != null && !_isSwitchingState && isGameOver)
                 {
-                    SwitchState(State.GAMEOVER);
+                    SwitchState(State.GAMEOVER, 10);
                 }
                 break;
             case State.GAMEOVER:

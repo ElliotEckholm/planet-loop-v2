@@ -20,6 +20,10 @@ public class ShipManager : MonoBehaviour
     public static bool shipCollision = false;
     public static bool fakeShipCollision = false;
 
+
+
+    //private Transform pivot;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +33,7 @@ public class ShipManager : MonoBehaviour
         launchAimLine = gameObject.AddComponent<LineRenderer>();
         launchAimLine.SetWidth(0.2f, 0.2f);
         launchAimLine.enabled = false;
+        
 
         shipCollision = false;
         fakeShipCollision = false;
@@ -51,23 +56,31 @@ public class ShipManager : MonoBehaviour
         {
             ShipHelper.drawLaunchLine(ship, launchAimLine);
             ShipHelper.calculateLaunchForce(ship);
-           
         }
+        
+
     }
 
     void FixedUpdate()
-    {
+    { 
 
+       
         if (LaunchButton.launchButtonClicked)
         {
             ShipHelper.launchShip(ship, launchAimLine);
             ship.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            // ShipHelper.applyPlanetForces(ship, planets);
         }
 
         if (ship != null && LaunchButton.launchButtonClickedFirstTime)
         {
             ShipHelper.applyPlanetForces(ship, planets);
             ship.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        }
+
+        if (ship != null && !LaunchButton.launchButtonClickedFirstTime && !PanelPlayUI.buttonEntered)
+        {
+            ShipHelper.rotateShip(ship);
         }
 
         if (ship != null)
@@ -80,7 +93,7 @@ public class ShipManager : MonoBehaviour
                 ship.GetComponent<Rigidbody>().transform.forward = shipVelocity;
             }
 
-        }
+         }
     }
 
 }
