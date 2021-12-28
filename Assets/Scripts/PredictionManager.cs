@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
@@ -16,7 +15,6 @@ public class PredictionManager : MonoBehaviour
 
 
     public string predicitionSceneName;
-
     private bool predict;
 
 
@@ -43,6 +41,8 @@ public class PredictionManager : MonoBehaviour
         predictionPhysicsScene.Simulate(Time.fixedDeltaTime * 5);
         currentPhysicsScene.Simulate(Time.fixedDeltaTime);
 
+        
+        DestroyFakeShipAtExpiration();
 
         if (fakeShip)
         {
@@ -71,7 +71,6 @@ public class PredictionManager : MonoBehaviour
         if (predict)
         {
             CreateAndLaunchFakeShip();
-            DestroyFakeShip();
             predict = false;
         }
 
@@ -97,18 +96,28 @@ public class PredictionManager : MonoBehaviour
         // Add fake ship to prediction
         if (realShip)
         {
+            if (fakeShip) Destroy(fakeShip, 0f); // Destroy previous fakeShip if it exists
             fakeShip = Instantiate(fakeShipVariant, realShip.transform.position, realShip.transform.rotation);
             SceneManager.MoveGameObjectToScene(fakeShip, predictionScene);
             Renderer fakeRenderer = fakeShip.GetComponent<Renderer>();
-            fakeRenderer.enabled = true; // Boolean to render the fake ship or not during play mode
+            fakeRenderer.enabled = false; // Boolean to render the fake ship or not during play mode
             fakeShip.GetComponent<Rigidbody>().AddForce(ShipHelper.launchForce, ForceMode.VelocityChange);
         }
        
     }
 
-    void DestroyFakeShip()
+    void DestroyFakeShipAtExpiration()
     {
-        float delay = 3f;
-        Destroy(fakeShip, delay);
+        float maxDistance = 75f;
+        
+        if (fakeShip)
+        {
+            // Destroy fake ship after it is x distance from real ship
+            if (Vector3.Distance(realShip.transform.position, fakeShip.transform.position) >= maxDistance)
+            {
+                Destroy(fakeShip, 0f);
+            }
+        }
+
     }
 }

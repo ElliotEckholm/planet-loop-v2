@@ -112,6 +112,8 @@ public class GameManager : MonoBehaviour
         SceneManager.UnloadSceneAsync(predictionManager.predicitionSceneName);
         LaunchButton.launchButtonClicked = false;
         LaunchButton.launchButtonClickedFirstTime = false;
+        AngleSlider.Reset();
+        MagnitudeSlider.Reset();
         SwitchState(State.LOADLEVEL);
     }
 
