@@ -1,34 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Level0 : MonoBehaviour
 {
-    // Allows helper classes to access this level's planets
-    public static GameObject[] planets;
-
-    Scene currentScene;
-    PhysicsScene currentPhysicsScene;
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        planets = GameManager.currentLevelObjects;
-
-        currentScene = SceneManager.GetActiveScene();
-        currentPhysicsScene = currentScene.GetPhysicsScene();
-        //Physics.autoSimulation = false;
-
-        
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        //Debug.Log("Is game over");
-    }
-
+    
     public static void LevelRotations()
     {
 
@@ -69,35 +44,4 @@ public class Level0 : MonoBehaviour
         //GameObject.Find("Moon2").transform.RotateAround(GameObject.Find("Planet1").transform.position, moon2OrbitAixs, 100 * Time.deltaTime);
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    Debug.Log("Is game over");
-
-    //    if (name == "Ship")
-    //    {
-    //        ShipManager.shipCollision = true;
-            
-    //    }
-    //    if (name.Contains("FakeShip"))
-    //    {
-    //        ShipManager.fakeShipCollision = true;
-    //    }
-
-
-    //    // Win level by hitting planet 1
-    //    if (collision.gameObject.name == "Planet1")
-    //    {
-    //        GameManager.isGameOver = true;
-    //        Debug.Log("Is game over");
-    //        //Debug.Log("collision  = " + collision.gameObject.name);
-    //        //GameManager.LevelComplete = true;
-    //    }
-
-    //    //foreach (ContactPoint contact in collision.contacts)
-    //    //{
-    //    //    Debug.DrawRay(contact.point, contact.normal, Color.white);
-    //    //}
-    //    //if (collision.relativeVelocity.magnitude > 2)
-
-    //}
 }

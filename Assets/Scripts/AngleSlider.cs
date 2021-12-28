@@ -4,22 +4,31 @@ using UnityEngine;
 using UnityEngine.UI; // Required when Using UI elements.
 
 
-public class MagnitudeSlider : MonoBehaviour
+public class AngleSlider : MonoBehaviour
 {
 
-    public static float magnitudeSliderValue;
-    public Slider magnitudeSlider; 
+    public static float oldValue;
+    public static float newValue;
+    public static float angleSliderValue;
+    public Slider angleSlider;
+    private static GameObject ship;
    
     // Update is called once per frame
     void Start()
     {
-        magnitudeSlider = this.GetComponent<Slider>();
-
-        magnitudeSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+        
+        angleSlider = GetComponent<Slider>();
+        angleSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
     }
 
     public void ValueChangeCheck()
     {
-        magnitudeSliderValue = magnitudeSlider.value;
+        ship = GameObject.Find("Ship");
+        // "Undo" last angle and apply new angle change
+        oldValue = newValue;
+        newValue = angleSlider.value;
+        angleSliderValue = newValue - oldValue;
+        
+        ShipHelper.rotateShip(ship);
     }
 }

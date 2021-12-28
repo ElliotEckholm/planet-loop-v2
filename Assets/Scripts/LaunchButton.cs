@@ -2,8 +2,8 @@
 
 public class LaunchButton : MonoBehaviour
 {
-    public static bool launchButtonClicked = false;
-    public static bool launchButtonClickedFirstTime = false;
+    public static bool launchButtonClicked;
+    public static bool launchButtonClickedFirstTime;
 
     public void LaunchClicked()
     {

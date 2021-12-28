@@ -12,7 +12,7 @@ public class PanelPlayUI : MonoBehaviour
         // Set magnitude slider text equal to ship's launch magnitude (in Newtons)
         magnitudeSliderText.text = MagnitudeSlider.magnitudeSliderValue + " N";
         // Set angle slider text equal to ship's launch angle
-        angleSliderText.text = MagnitudeSlider.magnitudeSliderValue + " N";
+        angleSliderText.text = AngleSlider.newValue + " °";
     }
 
     public void EnterUI()

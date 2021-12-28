@@ -14,11 +14,10 @@ public class PredictionManager : MonoBehaviour
     PhysicsScene predictionPhysicsScene;
     PhysicsScene currentPhysicsScene;
 
-    public GameObject predictionPoint;
 
     public string predicitionSceneName;
 
-    private bool predict = false;
+    private bool predict;
 
 
     // Start is called before the first frame update
@@ -48,11 +47,6 @@ public class PredictionManager : MonoBehaviour
         if (fakeShip)
         {
             ShipHelper.applyPlanetForces(fakeShip, planets);
-
-            // Place trajectory point on fake ship's path
-            //predictionPoint = Instantiate(predictionPoint);
-            //SceneManager.MoveGameObjectToScene(predictionPoint, predictionScene);
-            //predictionPoint.transform.position = fakeShip.transform.position;
 
             // Angle ship to forward direction of ship's velocity
             Vector3 shipVelocity = fakeShip.GetComponent<Rigidbody>().velocity;
@@ -96,19 +90,20 @@ public class PredictionManager : MonoBehaviour
             predict = true;
         }
     }
-
-    void CreatePredictionPoint()
-    {
-    }
+    
 
     void CreateAndLaunchFakeShip()
     {
         // Add fake ship to prediction
-        fakeShip = Instantiate(fakeShipVariant, realShip.transform.position, realShip.transform.rotation);
-        SceneManager.MoveGameObjectToScene(fakeShip, predictionScene);
-        Renderer fakeRenderer = fakeShip.GetComponent<Renderer>();
-        fakeRenderer.enabled = true; // Boolean to render the fake ship or not during play mode
-        fakeShip.GetComponent<Rigidbody>().AddForce(ShipHelper.launchForce, ForceMode.VelocityChange);
+        if (realShip)
+        {
+            fakeShip = Instantiate(fakeShipVariant, realShip.transform.position, realShip.transform.rotation);
+            SceneManager.MoveGameObjectToScene(fakeShip, predictionScene);
+            Renderer fakeRenderer = fakeShip.GetComponent<Renderer>();
+            fakeRenderer.enabled = true; // Boolean to render the fake ship or not during play mode
+            fakeShip.GetComponent<Rigidbody>().AddForce(ShipHelper.launchForce, ForceMode.VelocityChange);
+        }
+       
     }
 
     void DestroyFakeShip()

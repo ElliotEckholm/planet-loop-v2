@@ -8,11 +8,7 @@ public class ExplodeObject : MonoBehaviour
     public float minForce;
     public float maxForce;
     public float radius;
-
-    //private void Start()
-    //{
-    //    Explode();
-    //}
+    
 
     public void Explode()
     {
