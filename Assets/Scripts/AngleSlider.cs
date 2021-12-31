@@ -13,7 +13,11 @@ public class AngleSlider : MonoBehaviour
     public static float angleSliderValue;
     public static Slider angleSlider;
     private static GameObject ship;
-   
+
+    private float minScreenY = -40f;
+    private float maxScreenY = 40f;
+    private float offset = 10f;
+    
     // Update is called once per frame
     void Start()
     {
@@ -31,6 +35,9 @@ public class AngleSlider : MonoBehaviour
         {
             angleSlider.enabled = true;
         }
+
+        if (!LaunchButton.launchButtonClickedFirstTime) ChangeAngleBasedOnMousePosition();
+
     }
 
     public void ValueChangeCheck()
@@ -50,5 +57,23 @@ public class AngleSlider : MonoBehaviour
     {
         angleSlider.value = 0;
         angleSliderValue = 0;
+    }
+
+    public void ChangeAngleBasedOnMousePosition()
+    {
+        if (Input.GetMouseButton(0) && !PanelPlayUI.buttonEntered)
+        {
+            float mousePositionY = ShipHelper.getCurrentMousePosition().GetValueOrDefault().y;
+            float minMousePosition = minScreenY + offset;
+            float maxMousePosition = maxScreenY - offset;
+            float minAngle = angleSlider.minValue;
+            float maxAngle = angleSlider.maxValue;
+
+            float normalizedMousePosition = (mousePositionY - minMousePosition) / (maxMousePosition - minMousePosition);
+            float scaledMousePosition = normalizedMousePosition * (maxAngle - minAngle) + minAngle;
+            
+            angleSlider.value = scaledMousePosition;
+            angleSliderValue = scaledMousePosition;
+        }
     }
 }

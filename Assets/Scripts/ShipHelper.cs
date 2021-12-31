@@ -64,4 +64,18 @@ public class ShipHelper : MonoBehaviour
             ship.GetComponent<Rigidbody>().AddForce(force);
         }
     }
+    
+    public static Vector3? getCurrentMousePosition()
+    {
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var plane = new Plane(Vector3.forward, Vector3.zero);
+
+        float rayDistance;
+        if (plane.Raycast(ray, out rayDistance))
+        {
+            return ray.GetPoint(rayDistance);
+        }
+
+        return null;
+    }
 }

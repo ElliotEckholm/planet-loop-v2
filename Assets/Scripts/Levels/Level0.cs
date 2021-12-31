@@ -8,7 +8,7 @@ public class Level0 : MonoBehaviour
     {
 
         //Rotate Earth
-        GameObject.Find("Earth").transform.Rotate(0, 1, 0);
+        // GameObject.Find("Earth").transform.Rotate(0, 1, 0);
         // Make Moon1 orbit Earth
         Vector3 moon1OrbitAixs = new Vector3(0, 0, 0.1f);
         GameObject.Find("Moon1").transform.RotateAround(GameObject.Find("Earth").transform.position, moon1OrbitAixs, 100 * Time.deltaTime);
@@ -21,7 +21,7 @@ public class Level0 : MonoBehaviour
 
 
 
-        GameObject.Find("Earth(Clone)").transform.Rotate(0, 1, 0);
+        // GameObject.Find("Earth(Clone)").transform.Rotate(0, 1, 0);
         // Make Moon1 orbit Earth
         Vector3 fakeMoon1OrbitAixs = new Vector3(0, 0, 0.1f);
         GameObject.Find("Moon1(Clone)").transform.RotateAround(GameObject.Find("Earth(Clone)").transform.position, fakeMoon1OrbitAixs, 100 * Time.deltaTime);

@@ -94,7 +94,7 @@ public class PredictionManager : MonoBehaviour
     void CreateAndLaunchFakeShip()
     {
         // Add fake ship to prediction
-        if (realShip)
+        if (realShip && !LaunchButton.launchButtonClickedFirstTime)
         {
             if (fakeShip) Destroy(fakeShip, 0f); // Destroy previous fakeShip if it exists
             fakeShip = Instantiate(fakeShipVariant, realShip.transform.position, realShip.transform.rotation);
