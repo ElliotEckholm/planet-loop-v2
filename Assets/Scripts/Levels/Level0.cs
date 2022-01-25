@@ -1,9 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Level0 : MonoBehaviour
 {
     
+    public void FixedUpdate()
+    {
+        if (WinZoneCollider.winZoneCollision)
+        {
+            Debug.Log(WinZoneCollider.winZoneCollision);
+            Debug.Log(WinZoneCollider.colliderName);
+            Debug.Log(WinZoneCollider.winZoneName);
+        }
+       
+    }
+
     public static void LevelRotations()
     {
 

@@ -73,6 +73,7 @@
      <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
      <Compile Include="Assets\Scripts\Singleton.cs" />
      <Compile Include="Assets\Scripts\SpawnChunkedShip.cs" />
+     <Compile Include="Assets\Scripts\WinZoneCollider.cs" />
  <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
  <HintPath>/Users/ellioteckholm/Documents/Unity/Planet Loop V2/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
  </Reference>
