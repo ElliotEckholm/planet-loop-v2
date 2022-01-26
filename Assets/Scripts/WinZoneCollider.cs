@@ -1,19 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WinZoneCollider : MonoBehaviour
 {
     public static bool winZoneCollision;
     public static string winZoneName;
     public static string colliderName;
-    private float alpha;
-
-    private void Start()
-    {
-        alpha = gameObject.GetComponent<MeshRenderer>().material.color.a;
-
-        Debug.Log(gameObject.GetComponent<MeshRenderer>().material.color);
-    }
+    private Color winColor = new Color(0,1,0,0.6f);
 
     private void Update()
     {
@@ -34,7 +26,7 @@ public class WinZoneCollider : MonoBehaviour
     {
         if (winZoneCollision)
         {
-            alpha = 1;
+            GameObject.Find(winZoneName).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", winColor);
         }
     }
 }
