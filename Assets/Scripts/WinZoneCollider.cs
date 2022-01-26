@@ -14,7 +14,8 @@ public class WinZoneCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name.Contains("Ship") && !GameManager.isGameOver)
+        // other.gameObject.name.Contains("Ship") && 
+        if (!GameManager.isGameOver && !ShipManager.shipCollision && LaunchButton.launchButtonClickedFirstTime)
         {
             winZoneCollision = true;
             winZoneName = name;

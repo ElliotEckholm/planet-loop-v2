@@ -114,6 +114,8 @@ public class GameManager : MonoBehaviour
         LaunchButton.launchButtonClickedFirstTime = false;
         AngleSlider.Reset();
         MagnitudeSlider.Reset();
+        WinZoneCollider.winZoneCollision = false;
+        isGameOver = false;
         SwitchState(State.LOADLEVEL);
     }
 
