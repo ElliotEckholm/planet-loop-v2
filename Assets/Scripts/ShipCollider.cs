@@ -5,8 +5,8 @@ public class ShipCollider : MonoBehaviour
     
     private void OnCollisionEnter(Collision collision)
     {
-        // Win level by hitting planet 1
-        if (collision.gameObject.name.Contains("Planet1"))
+        // Blow up ship if it collides with anything other than a WinZone
+        if (!collision.gameObject.name.Contains("WinZone") && LaunchButton.launchButtonClickedFirstTime)
         {
             DestroyShip(name);
             //GameManager.LevelComplete = true;
@@ -15,7 +15,7 @@ public class ShipCollider : MonoBehaviour
 
     private void DestroyShip(string name)
     {
-
+    
         // Destory fake ship
         if (name.Contains("FakeShip"))
         {

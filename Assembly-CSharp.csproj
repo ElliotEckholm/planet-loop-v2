@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\ExplodeObject.cs" />
      <Compile Include="Assets\Scripts\Flame.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\LandButton.cs" />
      <Compile Include="Assets\Scripts\LaunchButton.cs" />
      <Compile Include="Assets\Scripts\Levels\Level0.cs" />
      <Compile Include="Assets\Scripts\MagnitudeSlider.cs" />
@@ -73,6 +74,7 @@
      <Compile Include="Assets\Scripts\SimpleCameraController.cs" />
      <Compile Include="Assets\Scripts\Singleton.cs" />
      <Compile Include="Assets\Scripts\SpawnChunkedShip.cs" />
+     <Compile Include="Assets\Scripts\WinZoneCollider.cs" />
  <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
  <HintPath>/Users/ellioteckholm/Documents/Unity/Planet Loop V2/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
  </Reference>
@@ -115,6 +117,9 @@
  <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
  <HintPath>/Users/ellioteckholm/Documents/Unity/Planet Loop V2/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.2D.Sprite.Editor">
+ <HintPath>/Users/ellioteckholm/Documents/Unity/Planet Loop V2/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.ShaderGraph.Editor">
  <HintPath>/Users/ellioteckholm/Documents/Unity/Planet Loop V2/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
  </Reference>
@@ -126,9 +131,6 @@
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>/Users/ellioteckholm/Documents/Unity/Planet Loop V2/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Sprite.Editor">
- <HintPath>/Users/ellioteckholm/Documents/Unity/Planet Loop V2/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>/Applications/Unity/Hub/Editor/2019.4.17f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

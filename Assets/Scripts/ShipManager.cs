@@ -45,13 +45,13 @@ public class ShipManager : MonoBehaviour
 
     void FixedUpdate()
     {
-
         if (ship != null && LaunchButton.launchButtonClicked)
         {
             ship.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             ShipHelper.launchShip(ship);
             LaunchButton.launchButtonClicked = false;
         }
+        
 
         if (ship != null && LaunchButton.launchButtonClickedFirstTime)
         {
@@ -69,6 +69,11 @@ public class ShipManager : MonoBehaviour
                 ship.GetComponent<Rigidbody>().transform.forward = shipVelocity;
             }
         }
+        
+        // if (ship != null && LaunchButton.launchButtonClicked && LandButton.landButtonClicked)
+        // {
+        //     ship.GetComponent<Rigidbody>().transform.Rotate();
+        // }
     }
 
 }

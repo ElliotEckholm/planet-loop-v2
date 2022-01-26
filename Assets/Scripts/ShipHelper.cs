@@ -10,6 +10,22 @@ public class ShipHelper : MonoBehaviour
     // public static float launchMagnitude;
     public static Vector3 launchDirection;
 
+    
+    public static void DestroyShip(GameObject ship)
+    {
+
+        // Destory fake ship
+        if (ship.name.Contains("FakeShip"))
+        {
+            Destroy(ship);
+        }
+        // Destory real ship 
+        else
+        {
+            GameManager.isGameOver = true;
+            ShipManager.shipCollision = true;
+        }
+    }
 
     public static void isGamePaused()
     {
