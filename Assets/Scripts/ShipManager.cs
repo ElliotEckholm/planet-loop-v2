@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 
 public class ShipManager : MonoBehaviour
@@ -15,6 +16,11 @@ public class ShipManager : MonoBehaviour
     public static bool shipCollision;
     public static bool fakeShipCollision;
 
+    // TOOD: reset this on restart
+    public static bool applyPlanetForces = true;
+    public static Vector3 acceleration;
+    public static Vector3 lastVelocity;
+    bool landing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +51,44 @@ public class ShipManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        acceleration = (ship.GetComponent<Rigidbody>().velocity - lastVelocity) / Time.fixedDeltaTime;
+        lastVelocity = ship.GetComponent<Rigidbody>().velocity;
+
+        
+        
+        if (ship != null && LandButton.landButtonClicked)
+        {
+            Rigidbody shipBody = ship.GetComponent<Rigidbody>();
+            applyPlanetForces = false;
+            // Stop rocket
+            shipBody.velocity = new Vector3(0, 0, 0);
+            // Point towards earth
+            Vector3 earthPosition = GameObject.Find("Earth").transform.position;
+            shipBody.transform.LookAt(earthPosition);
+
+            // Flip ship around so "butt" is facing earth
+            shipBody.transform.RotateAround(shipBody.transform.position, shipBody.transform.right, 180f);
+            
+            LandButton.landButtonClicked = false;
+            landing = true;
+
+        }
+
+        // Add force towards Earth in order to land on it
+        if (ship != null && landing)
+        {
+            GameObject earth = GameObject.Find("Earth");
+            Vector3 earthPosition = earth.transform.position;
+
+            Vector3 direction = (earthPosition - ship.transform.position).normalized;
+            // calculate magnitude: gravitationalConstant * shipMass * planetMass
+            float magnitude = ship.GetComponent<Rigidbody>().mass * earth.GetComponent<Rigidbody>().mass * 10f;
+
+            Vector3 force = direction * (magnitude);
+
+            ship.GetComponent<Rigidbody>().AddForce(force);
+        }
+        
         if (ship != null && LaunchButton.launchButtonClicked)
         {
             ship.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
@@ -53,13 +97,15 @@ public class ShipManager : MonoBehaviour
         }
         
 
-        if (ship != null && LaunchButton.launchButtonClickedFirstTime)
+        if (ship != null && LaunchButton.launchButtonClickedFirstTime && applyPlanetForces)
         {
             ship.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             ShipHelper.applyPlanetForces(ship, planets);
         }
+        
+        
 
-        if (ship != null)
+        if (ship != null && !landing)
         {
             // Angle ship to forward direction of ship's velocity
             // e.g. make ship face the correct way
@@ -70,10 +116,7 @@ public class ShipManager : MonoBehaviour
             }
         }
         
-        // if (ship != null && LaunchButton.launchButtonClicked && LandButton.landButtonClicked)
-        // {
-        //     ship.GetComponent<Rigidbody>().transform.Rotate();
-        // }
+        
     }
 
 }

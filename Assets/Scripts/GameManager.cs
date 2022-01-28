@@ -115,6 +115,7 @@ public class GameManager : MonoBehaviour
         AngleSlider.Reset();
         MagnitudeSlider.Reset();
         WinZoneCollider.winZoneCollision = false;
+        ShipManager.applyPlanetForces = true;
         isGameOver = false;
         SwitchState(State.LOADLEVEL);
     }
