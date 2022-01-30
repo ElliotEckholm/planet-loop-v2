@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
         SceneManager.UnloadSceneAsync(predictionManager.predicitionSceneName);
         LaunchButton.launchButtonClicked = false;
         LaunchButton.launchButtonClickedFirstTime = false;
-        AngleSlider.Reset();
+        // AngleSlider.Reset();
         MagnitudeSlider.Reset();
         WinZoneCollider.winZoneCollision = false;
         ShipManager.applyPlanetForces = true;

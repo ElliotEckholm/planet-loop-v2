@@ -18,8 +18,6 @@ public class ShipManager : MonoBehaviour
 
     // TOOD: reset this on restart
     public static bool applyPlanetForces = true;
-    public static Vector3 acceleration;
-    public static Vector3 lastVelocity;
     bool landing = false;
 
     // Start is called before the first frame update
@@ -47,14 +45,16 @@ public class ShipManager : MonoBehaviour
             ShipHelper.calculateLaunchAngle(ship);
             ShipHelper.calculateLaunchForce();
         }
+        
+        if (Input.GetMouseButton(0) && !PanelPlayUI.buttonEntered)
+        {
+            ShipHelper.rotateShip(ship);
+        }
+        
     }
 
     void FixedUpdate()
     {
-        acceleration = (ship.GetComponent<Rigidbody>().velocity - lastVelocity) / Time.fixedDeltaTime;
-        lastVelocity = ship.GetComponent<Rigidbody>().velocity;
-
-        
         
         if (ship != null && LandButton.landButtonClicked)
         {
