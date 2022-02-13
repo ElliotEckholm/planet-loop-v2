@@ -58,20 +58,17 @@ public class ShipManager : MonoBehaviour
         
         if (ship != null && LandButton.landButtonClicked)
         {
-            Rigidbody shipBody = ship.GetComponent<Rigidbody>();
-            applyPlanetForces = false;
-            // Stop rocket
-            shipBody.velocity = new Vector3(0, 0, 0);
-            // Point towards earth
-            Vector3 earthPosition = GameObject.Find("Earth").transform.position;
-            shipBody.transform.LookAt(earthPosition);
-
-            // Flip ship around so "butt" is facing earth
-            shipBody.transform.RotateAround(shipBody.transform.position, shipBody.transform.right, 180f);
-            
-            LandButton.landButtonClicked = false;
-            landing = true;
-
+            // If ship is within land zone, then land ship
+            if (LandZoneCollider.landZoneCollision)
+            {
+                LandShip();
+            }
+            // Blow up ship otherwise
+            else
+            {
+                GameManager.isGameOver = true;
+                shipCollision = true;
+            }
         }
 
         // Add force towards Earth in order to land on it
@@ -117,6 +114,22 @@ public class ShipManager : MonoBehaviour
         }
         
         
+    }
+
+    void LandShip() {
+        Rigidbody shipBody = ship.GetComponent<Rigidbody>();
+        applyPlanetForces = false;
+        // Stop rocket
+        shipBody.velocity = new Vector3(0, 0, 0);
+        // Point towards earth
+        Vector3 earthPosition = GameObject.Find("Earth").transform.position;
+        shipBody.transform.LookAt(earthPosition);
+
+        // Flip ship around so "butt" is facing earth
+        shipBody.transform.RotateAround(shipBody.transform.position, shipBody.transform.right, 180f);
+            
+        LandButton.landButtonClicked = false;
+        landing = true;
     }
 
 }
