@@ -10,6 +10,9 @@ public class ShipHelper : MonoBehaviour
     // public static float launchMagnitude;
     public static Vector3 launchDirection;
 
+    public static float oldValue;
+    public static float newValue;
+    public static float finalAngle;
     
     public static void DestroyShip(GameObject ship)
     {
@@ -40,7 +43,16 @@ public class ShipHelper : MonoBehaviour
         if (ship != null)
         {
             GameObject planet = GameObject.Find("Earth");
-            ship.transform.RotateAround(planet.transform.position * planet.transform.localScale.x, Vector3.forward, AngleSlider.angleSliderValue);
+
+            Vector3 planetVector = planet.transform.position;
+            planetVector = getCurrentMousePosition().GetValueOrDefault() - planetVector;
+            
+            oldValue = newValue;
+            newValue = Mathf.Atan2(planetVector.y, planetVector.x) * Mathf.Rad2Deg;
+            finalAngle = newValue - oldValue;
+            
+            ship.transform.RotateAround(planet.transform.position * planet.transform.localScale.x, 
+                Vector3.forward, finalAngle);
         }
     }
 

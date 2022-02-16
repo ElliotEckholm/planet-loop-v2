@@ -58,11 +58,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\AngleSlider.cs" />
      <Compile Include="Assets\Scripts\ExplodeObject.cs" />
      <Compile Include="Assets\Scripts\Flame.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\LandButton.cs" />
+     <Compile Include="Assets\Scripts\LandZoneCollider.cs" />
      <Compile Include="Assets\Scripts\LaunchButton.cs" />
      <Compile Include="Assets\Scripts\Levels\Level0.cs" />
      <Compile Include="Assets\Scripts\MagnitudeSlider.cs" />
