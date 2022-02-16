@@ -15,6 +15,7 @@ public class ShipManager : MonoBehaviour
     // Used in other classes
     public static bool shipCollision;
     public static bool fakeShipCollision;
+    public static bool shipLanded;
 
     // TOOD: reset this on restart
     public static bool applyPlanetForces = true;
@@ -130,6 +131,8 @@ public class ShipManager : MonoBehaviour
             
         LandButton.landButtonClicked = false;
         landing = true;
+
+        shipLanded = true;
     }
 
 }

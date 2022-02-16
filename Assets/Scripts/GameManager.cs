@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
 
     public static bool IsGamePaused = false;
     public static bool LevelComplete = false;
+    
 
 
     // Use getter and setter when you want to update a value only when it is change
@@ -55,11 +57,6 @@ public class GameManager : MonoBehaviour
             _Lives = value;
             //LivesText.text = "Lives: " + _Lives;
         }
-    }
-
-    void Start()
-    {
-
     }
 
     public void PlayClicked()
@@ -205,12 +202,6 @@ public class GameManager : MonoBehaviour
                 {
                     _currentLevel = Instantiate(levels[Level]);
                     currentLevelObjects = GameObject.FindGameObjectsWithTag("planetObject");
-
-                    //foreach (GameObject levelObject in currentLevelObjects)
-                    //{
-                    //    Debug.Log("planets: " + levelObject.name);
-                    //}
-                    
                 }
                 break;
             case State.GAMEOVER:
@@ -221,6 +212,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+
         switch (_state)
         {
             case State.MENU:
@@ -236,7 +228,6 @@ public class GameManager : MonoBehaviour
             case State.LEVELCOMPLETED:
                 break;
             case State.LOADLEVEL:
-                //Debug.Log("LevelComplete  = " + LevelComplete);
                 if (_currentLevel != null && !_isSwitchingState && LevelComplete)
                 {
                     LevelComplete = false;
