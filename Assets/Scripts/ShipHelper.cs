@@ -13,7 +13,14 @@ public class ShipHelper : MonoBehaviour
     public static float oldValue;
     public static float newValue;
     public static float finalAngle;
-    
+
+    public static void ResetAngle()
+    {
+        oldValue = 0;
+        newValue = 0;
+        finalAngle = 0;
+    }
+
     public static void DestroyShip(GameObject ship)
     {
 

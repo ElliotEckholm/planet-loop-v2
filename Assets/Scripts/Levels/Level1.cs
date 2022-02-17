@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 
-public class Level0 : MonoBehaviour
+public class Level1 : MonoBehaviour
 {
     
     public void FixedUpdate()
     {
-        if (WinZoneCollider.winZoneCollision && ShipManager.shipLanded)
+        if (ShipManager.shipLanded)
         {
             GameManager.LevelComplete = true;
         }
     }
 
-    public static void SetupLevel()
+    public static void LevelRotations()
     {
         // Make Moon1 orbit Earth
         Vector3 moon1OrbitAixs = new Vector3(0, 0, 0.1f);

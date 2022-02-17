@@ -8,8 +8,7 @@ public class ShipCollider : MonoBehaviour
         // Blow up ship if it collides with anything other than a WinZone
         if (!collision.gameObject.name.Contains("WinZone") && LaunchButton.launchButtonClickedFirstTime)
         {
-            // DestroyShip(name);
-            //GameManager.LevelComplete = true;
+            DestroyShip(name);
         }
     }
 

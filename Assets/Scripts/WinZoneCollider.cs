@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class WinZoneCollider : MonoBehaviour
 {
@@ -29,5 +30,10 @@ public class WinZoneCollider : MonoBehaviour
         {
             GameObject.Find(winZoneName).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", winColor);
         }
+    }
+
+    public static void Reset()
+    {
+        winZoneCollision = false;
     }
 }

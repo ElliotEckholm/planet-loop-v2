@@ -74,8 +74,8 @@ public class PredictionManager : MonoBehaviour
             predict = false;
         }
 
-
-        Level0.LevelRotations();
+        // TODO: This is hardcoded for only Level 0. FIX ME
+        Level0.SetupLevel();
     }
 
     // Update is called once per frame
