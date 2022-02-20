@@ -44,12 +44,12 @@ public class GameManager : MonoBehaviour
 
     public static bool IsGamePaused = false;
     public static bool LevelComplete = false;
-
+    public static bool restartClicked = false;
 
     // Use getter and setter when you want to update a value only when it is change
     public static int _level;
 
-    public int Level
+    public static int Level
     {
         get { return _level; }
         set { _level = value; }
@@ -101,15 +101,28 @@ public class GameManager : MonoBehaviour
 
     public void RestartClicked()
     {
+        restartClicked = true;
         if (_currentLevel != null)
         {
             Destroy(_currentLevel);
         }
 
-        // MagnitudeSlider.Reset();
         LoadLevel();
         Reset();
         SwitchState(State.LOADLEVEL);
+    }
+
+    public void RestartFromLose()
+    {
+        restartClicked = true;
+        if (_currentLevel != null)
+        {
+            Destroy(_currentLevel);
+        }
+
+        LoadLevel();
+        Reset();
+        SwitchState(State.INIT);
     }
 
     public void Level1Clicked()
@@ -235,22 +248,17 @@ public class GameManager : MonoBehaviour
             case State.LOADLEVEL:
                 if (_currentLevel != null && !_isSwitchingState && LevelComplete)
                 {
-                    Reset();
                     SwitchState(State.LEVELCOMPLETED);
+                    Reset();
                 }
 
                 if (_currentLevel != null && !_isSwitchingState && isGameOver)
                 {
-                    SwitchState(State.GAMEOVER, 1);
+                    SwitchState(State.GAMEOVER, 0.5F);
                 }
 
                 break;
             case State.GAMEOVER:
-                if (Input.anyKeyDown)
-                {
-                    SwitchState(State.MENU);
-                }
-
                 break;
         }
     }
