@@ -13,22 +13,29 @@ public class ShipHelper : MonoBehaviour
     public static float oldValue;
     public static float newValue;
     public static float finalAngle;
-    
-    public static void DestroyShip(GameObject ship)
-    {
 
-        // Destory fake ship
-        if (ship.name.Contains("FakeShip"))
-        {
-            Destroy(ship);
-        }
-        // Destory real ship 
-        else
-        {
-            GameManager.isGameOver = true;
-            ShipManager.shipCollision = true;
-        }
+    public static void ResetAngle()
+    {
+        oldValue = 0;
+        newValue = 0;
+        finalAngle = 0;
     }
+
+    // public static void DestroyShip(GameObject ship)
+    // {
+    //
+    //     // Destory fake ship
+    //     if (ship.name.Contains("FakeShip"))
+    //     {
+    //         Destroy(ship);
+    //     }
+    //     // Destory real ship 
+    //     else
+    //     {
+    //         GameManager.isGameOver = true;
+    //         ShipManager.shipCollision = true;
+    //     }
+    // }
 
     public static void isGamePaused()
     {

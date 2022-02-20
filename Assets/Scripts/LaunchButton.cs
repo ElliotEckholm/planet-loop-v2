@@ -9,5 +9,7 @@ public class LaunchButton : MonoBehaviour
     {
         launchButtonClicked = true;
         launchButtonClickedFirstTime = true;
+
+        // enabled = false;
     }
 }

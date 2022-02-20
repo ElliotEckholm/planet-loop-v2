@@ -30,4 +30,9 @@ public class LandZoneCollider : MonoBehaviour
             GameObject.Find(landZoneName).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", landColor);
         }
     }
+
+    public static void Reset()
+    {
+        landZoneCollision = false;
+    }
 }

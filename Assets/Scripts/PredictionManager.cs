@@ -74,8 +74,16 @@ public class PredictionManager : MonoBehaviour
             predict = false;
         }
 
-
-        Level0.LevelRotations();
+        // TODO: This is hardcoded for only Level 0. FIX ME
+        if (GameManager.Level == 0)
+        {
+            Level0.SetupLevel();
+        } else if (GameManager.Level == 1)
+        {
+            Level1.SetupLevel();
+        }
+        
+        
     }
 
     // Update is called once per frame
@@ -110,7 +118,7 @@ public class PredictionManager : MonoBehaviour
     {
         float maxDistance = 75f;
         
-        if (fakeShip)
+        if (fakeShip && realShip)
         {
             // Destroy fake ship after it is x distance from real ship
             if (Vector3.Distance(realShip.transform.position, fakeShip.transform.position) >= maxDistance)

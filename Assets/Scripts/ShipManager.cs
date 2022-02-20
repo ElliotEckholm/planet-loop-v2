@@ -41,7 +41,7 @@ public class ShipManager : MonoBehaviour
     {
         ShipHelper.isGamePaused();
         
-        if (!LaunchButton.launchButtonClickedFirstTime)
+        if (!LaunchButton.launchButtonClickedFirstTime && ship != null)
         {
             ShipHelper.calculateLaunchAngle(ship);
             ShipHelper.calculateLaunchForce();
@@ -56,6 +56,11 @@ public class ShipManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        
+        if(ship != null && !ship.GetComponent<Renderer>().isVisible){
+            GameManager.isGameOver = true;
+            shipCollision = true;
+        }
         
         if (ship != null && LandButton.landButtonClicked)
         {

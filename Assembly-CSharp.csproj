@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\LandZoneCollider.cs" />
      <Compile Include="Assets\Scripts\LaunchButton.cs" />
      <Compile Include="Assets\Scripts\Levels\Level0.cs" />
+     <Compile Include="Assets\Scripts\Levels\Level1.cs" />
      <Compile Include="Assets\Scripts\MagnitudeSlider.cs" />
      <Compile Include="Assets\Scripts\PanelPlayUI.cs" />
      <Compile Include="Assets\Scripts\PredictionManager.cs" />

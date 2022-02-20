@@ -1,23 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Level0 : MonoBehaviour
+public class Level1 : MonoBehaviour
 {
     
     public void FixedUpdate()
     {
-        if (WinZoneCollider.winZoneCollision && ShipManager.shipLanded)
+        if (ShipManager.shipLanded)
         {
-            StartCoroutine(waiter());
+            GameManager.LevelComplete = true;
         }
-    }
-
-    
-    IEnumerator waiter()
-    {
-        yield return new WaitForSeconds(1F);
-        GameManager.LevelComplete = true;
     }
 
     public static void SetupLevel()
@@ -26,7 +17,7 @@ public class Level0 : MonoBehaviour
         Vector3 moon1OrbitAixs = new Vector3(0, 0, 0.1f);
         GameObject.Find("Moon1").transform.RotateAround(GameObject.Find("Earth").transform.position, moon1OrbitAixs, 100 * Time.deltaTime);
         GameObject.Find("Moon1(Clone)").transform.RotateAround(GameObject.Find("Earth(Clone)").transform.position, moon1OrbitAixs, 100 * Time.deltaTime);
-        
+
         //// Rotate Planet1
         GameObject.Find("Planet1").transform.Rotate(0, 0, 1);
         GameObject.Find("Planet1(Clone)").transform.Rotate(0, 0, 1);
