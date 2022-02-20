@@ -75,7 +75,15 @@ public class PredictionManager : MonoBehaviour
         }
 
         // TODO: This is hardcoded for only Level 0. FIX ME
-        Level0.SetupLevel();
+        if (GameManager._level == 0)
+        {
+            Level0.SetupLevel();
+        } else if (GameManager._level == 1)
+        {
+            Level1.SetupLevel();
+        }
+        
+        
     }
 
     // Update is called once per frame

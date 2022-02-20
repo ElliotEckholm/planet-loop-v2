@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -46,7 +47,7 @@ public class GameManager : MonoBehaviour
 
 
     // Use getter and setter when you want to update a value only when it is change
-    private int _level;
+    public static int _level;
 
     public int Level
     {
@@ -75,8 +76,7 @@ public class GameManager : MonoBehaviour
     public void NextLevelClicked()
     {
         Destroy(_currentLevel);
-        predictionManager = GameObject.FindGameObjectWithTag("PredictionManager").GetComponent<PredictionManager>();
-        SceneManager.UnloadSceneAsync(predictionManager.predicitionSceneName);
+        LoadLevel();
         Level++;
         SwitchState(State.INIT);
     }
@@ -88,10 +88,15 @@ public class GameManager : MonoBehaviour
         {
             Destroy(_currentLevel);
         }
+        LoadLevel();
+        SwitchState(State.LEVELMENU);
+    }
 
+    public void LoadLevel()
+    {
         predictionManager = GameObject.FindGameObjectWithTag("PredictionManager").GetComponent<PredictionManager>();
         SceneManager.UnloadSceneAsync(predictionManager.predicitionSceneName);
-        SwitchState(State.LEVELMENU);
+       
     }
 
     public void RestartClicked()
@@ -102,8 +107,7 @@ public class GameManager : MonoBehaviour
         }
 
         // MagnitudeSlider.Reset();
-        predictionManager = GameObject.FindGameObjectWithTag("PredictionManager").GetComponent<PredictionManager>();
-        SceneManager.UnloadSceneAsync(predictionManager.predicitionSceneName);
+        LoadLevel();
         Reset();
         SwitchState(State.LOADLEVEL);
     }
@@ -141,6 +145,7 @@ public class GameManager : MonoBehaviour
         LandZoneCollider.Reset();
         WinZoneCollider.Reset();
         ShipManager.shipLanded = false;
+        ShipManager.shipCollision = false;
         ShipHelper.ResetAngle();
         IsGamePaused = false;
         isGameOver = false;
@@ -150,8 +155,12 @@ public class GameManager : MonoBehaviour
         LevelComplete = false;
         ShipManager.applyPlanetForces = true;
         MagnitudeSlider.Reset();
+        Destroy(GameObject.Find("Ship"));
+        LandButton.landButtonClicked = false;
+
     }
 
+   
 
     void BeginState(State newState)
     {
@@ -177,7 +186,6 @@ public class GameManager : MonoBehaviour
                 {
                     Destroy(_currentLevel);
                 }
-
                 panelPlay.SetActive(true);
                 SwitchState(State.LOADLEVEL);
                 break;
@@ -233,7 +241,7 @@ public class GameManager : MonoBehaviour
 
                 if (_currentLevel != null && !_isSwitchingState && isGameOver)
                 {
-                    SwitchState(State.GAMEOVER, 10);
+                    SwitchState(State.GAMEOVER, 1);
                 }
 
                 break;

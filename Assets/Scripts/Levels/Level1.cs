@@ -11,7 +11,7 @@ public class Level1 : MonoBehaviour
         }
     }
 
-    public static void LevelRotations()
+    public static void SetupLevel()
     {
         // Make Moon1 orbit Earth
         Vector3 moon1OrbitAixs = new Vector3(0, 0, 0.1f);

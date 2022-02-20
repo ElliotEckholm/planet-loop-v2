@@ -21,21 +21,21 @@ public class ShipHelper : MonoBehaviour
         finalAngle = 0;
     }
 
-    public static void DestroyShip(GameObject ship)
-    {
-
-        // Destory fake ship
-        if (ship.name.Contains("FakeShip"))
-        {
-            Destroy(ship);
-        }
-        // Destory real ship 
-        else
-        {
-            GameManager.isGameOver = true;
-            ShipManager.shipCollision = true;
-        }
-    }
+    // public static void DestroyShip(GameObject ship)
+    // {
+    //
+    //     // Destory fake ship
+    //     if (ship.name.Contains("FakeShip"))
+    //     {
+    //         Destroy(ship);
+    //     }
+    //     // Destory real ship 
+    //     else
+    //     {
+    //         GameManager.isGameOver = true;
+    //         ShipManager.shipCollision = true;
+    //     }
+    // }
 
     public static void isGamePaused()
     {
