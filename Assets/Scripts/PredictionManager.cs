@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
@@ -7,7 +8,11 @@ public class PredictionManager : MonoBehaviour
     public GameObject realShip;
     public GameObject fakeShipVariant;
     private GameObject fakeShip;
-    GameObject[] planets;
+    List<GameObject> planets = new List<GameObject>();
+    
+    // public GameObject planet0;
+    // public GameObject planet1;
+    // public GameObject planet2;
 
     Scene predictionScene;
     PhysicsScene predictionPhysicsScene;
@@ -29,10 +34,16 @@ public class PredictionManager : MonoBehaviour
         predictionPhysicsScene = predictionScene.GetPhysicsScene();
         Physics.autoSimulation = false;
 
-        foreach (GameObject planet in planets)
+        // TODO only instaintate objects that get selected inside the LEVEL SETUP
+        // foreach (GameObject planet in planets)
+        // {
+        //     GameObject fakePlanet = Instantiate(planet, planet.transform.position, planet.transform.rotation);
+        //     SceneManager.MoveGameObjectToScene(fakePlanet, predictionScene);
+        // }
+        
+        if (GameManager.Level == 1)
         {
-            GameObject fakePlanet = Instantiate(planet, planet.transform.position, planet.transform.rotation);
-            SceneManager.MoveGameObjectToScene(fakePlanet, predictionScene);
+            Level1.SetupLevel(GameManager.currentLevelObjects);
         }
     }
 
@@ -46,7 +57,8 @@ public class PredictionManager : MonoBehaviour
 
         if (fakeShip)
         {
-            ShipHelper.applyPlanetForces(fakeShip, planets);
+            // TODO undo this!!
+            // ShipHelper.applyPlanetForces(fakeShip, planets);
 
             // Angle ship to forward direction of ship's velocity
             Vector3 shipVelocity = fakeShip.GetComponent<Rigidbody>().velocity;
@@ -78,11 +90,17 @@ public class PredictionManager : MonoBehaviour
         if (GameManager.Level == 0)
         {
             Level0.SetupLevel();
-        } else if (GameManager.Level == 1)
-        {
-            Level1.SetupLevel();
-        }
-        
+        } 
+        // else if (GameManager.Level == 1)
+        // {
+        //     List<GameObject> planets = new List<GameObject>();
+        //     planets.Add(planet0);
+        //     planets.Add(planet1);
+        //     planets.Add(planet2);
+        //
+        //     Level1.SetupLevel(planets);
+        // }
+        //
         
     }
 

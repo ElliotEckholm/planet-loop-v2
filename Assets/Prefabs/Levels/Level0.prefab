@@ -602,7 +602,7 @@ PrefabInstance:
     - target: {fileID: 4999768460823469000, guid: 846ff44e6309d405c82e4399a4a14f7d,
         type: 3}
       propertyPath: m_Name
-      value: Earth
+      value: Planet0
       objectReference: {fileID: 0}
     - target: {fileID: 7403772935636453980, guid: 846ff44e6309d405c82e4399a4a14f7d,
         type: 3}

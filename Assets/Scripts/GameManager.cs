@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
     public GameObject panelLevelCompleted;
     public GameObject panelGameOver;
     public GameObject[] levels;
-    public static GameObject[] currentLevelObjects;
+    public GameObject[] allPlanets;
+    public static List<GameObject> currentLevelObjects;
 
     public static bool isGameOver = false;
 
@@ -173,7 +174,11 @@ public class GameManager : MonoBehaviour
 
     }
 
-   
+    private void Start()
+    {
+        currentLevelObjects = new List<GameObject>();
+    }
+
 
     void BeginState(State newState)
     {
@@ -211,7 +216,6 @@ public class GameManager : MonoBehaviour
                 break;
             case State.LOADLEVEL:
                 Reset();
-                currentLevelObjects = null;
                 if (Level >= levels.Length)
                 {
                     SwitchState(State.GAMEOVER);
@@ -219,7 +223,13 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     _currentLevel = Instantiate(levels[Level]);
-                    currentLevelObjects = GameObject.FindGameObjectsWithTag("planetObject");
+                    
+                    foreach (var planet in allPlanets)
+                    {
+                        currentLevelObjects.Add(planet);
+                    }
+                    // currentLevelObjects = allPlanets;
+                    // currentLevelObjects = currentLevelObjects//GameObject.FindGameObjectsWithTag("planetObject");
                 }
 
                 break;

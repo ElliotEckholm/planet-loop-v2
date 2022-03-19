@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 
 public class ShipHelper : MonoBehaviour
@@ -45,12 +46,10 @@ public class ShipHelper : MonoBehaviour
             Time.timeScale = 1f;
     }
 
-    public static void rotateShip(GameObject ship)
+    public static void rotateShip(GameObject ship, GameObject planet)
     {
         if (ship != null)
         {
-            GameObject planet = GameObject.Find("Earth");
-
             Vector3 planetVector = planet.transform.position;
             planetVector = getCurrentMousePosition().GetValueOrDefault() - planetVector;
             
@@ -80,7 +79,7 @@ public class ShipHelper : MonoBehaviour
         ship.GetComponent<Rigidbody>().AddForce(launchForce, ForceMode.VelocityChange);
     }
 
-    public static void applyPlanetForces(GameObject ship, GameObject[] planets)
+    public static void applyPlanetForces(GameObject ship, List<GameObject> planets)
     {
         //apply spherical gravity to selected objects (set the objects in editor)
         foreach (GameObject planet in planets)

@@ -743,6 +743,10 @@ MonoBehaviour:
   levels:
   - {fileID: 6406866374676917530, guid: a88164e69a589433a85e905e9a8076b4, type: 3}
   - {fileID: 6406866374676917530, guid: 0599394f168044b109dece8968059a00, type: 3}
+  allPlanets:
+  - {fileID: 4999768460823469000, guid: 846ff44e6309d405c82e4399a4a14f7d, type: 3}
+  - {fileID: 8488347384942417581, guid: a1f855a0c972444aebc9d3bd59efb046, type: 3}
+  - {fileID: 3785172504363642317, guid: b8482f06fbfdf4c9e91708240fcd8972, type: 3}
 --- !u!4 &1494253686
 Transform:
   m_ObjectHideFlags: 0

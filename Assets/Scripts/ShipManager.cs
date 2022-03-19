@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
 public class ShipManager : MonoBehaviour
 {
 
-    GameObject[] planets;
+    public static List<GameObject> planets = new List<GameObject>();
     // Objects to add from Editor
     public GameObject ship;
 
@@ -49,7 +50,8 @@ public class ShipManager : MonoBehaviour
         
         if (Input.GetMouseButton(0) && !PanelPlayUI.buttonEntered)
         {
-            ShipHelper.rotateShip(ship);
+            GameObject earth = planets.Find(o => o.name == "Planet0");
+            ShipHelper.rotateShip(ship, earth);
         }
         
     }
@@ -77,10 +79,10 @@ public class ShipManager : MonoBehaviour
             }
         }
 
-        // Add force towards Earth in order to land on it
+        // Add force towards Planet0 in order to land on it
         if (ship != null && landing)
         {
-            GameObject earth = GameObject.Find("Earth");
+            GameObject earth = planets.Find(o => o.name == "Planet0");
             Vector3 earthPosition = earth.transform.position;
 
             Vector3 direction = (earthPosition - ship.transform.position).normalized;
@@ -103,6 +105,7 @@ public class ShipManager : MonoBehaviour
         if (ship != null && LaunchButton.launchButtonClickedFirstTime && applyPlanetForces)
         {
             ship.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            
             ShipHelper.applyPlanetForces(ship, planets);
         }
         
@@ -128,7 +131,7 @@ public class ShipManager : MonoBehaviour
         // Stop rocket
         shipBody.velocity = new Vector3(0, 0, 0);
         // Point towards earth
-        Vector3 earthPosition = GameObject.Find("Earth").transform.position;
+        Vector3 earthPosition = planets.Find(o => o.name == "Planet0").transform.position;
         shipBody.transform.LookAt(earthPosition);
 
         // Flip ship around so "butt" is facing earth
