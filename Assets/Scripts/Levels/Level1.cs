@@ -19,9 +19,13 @@ public class Level1 : MonoBehaviour
 
     public static void SetupLevel(List<GameObject> planets)
     {
-      
-        
-        GetRandomNumberOfPlanets(planets, 2,5);
+        CreateAndGetRandomNumberOfPlanets(planets, 2,5);
+        // foreach (var planet in randomlyGeneratedPlanets)
+        // {
+        //     Debug.Log("planet position = " + planet.transform.position);
+        //
+        // }
+        // return randomlyGeneratedPlanets;
         // Make Moon1 orbit Planet0
         // Vector3 moon1OrbitAixs = new Vector3(0, 0, 0.1f);
         // GameObject.Find("Moon1").transform.RotateAround(GameObject.Find("Planet0").transform.position, moon1OrbitAixs, 100 * Time.deltaTime);
@@ -37,28 +41,28 @@ public class Level1 : MonoBehaviour
         // GameObject.Find("Planet2(Clone)").transform.RotateAround(GameObject.Find("Planet1(Clone)").transform.position, planet2OrbitAixs, 50 * Time.deltaTime);
     }
 
-    public static void GetRandomNumberOfPlanets(List<GameObject> planets, int min, int max)
+    public static List<GameObject> CreateAndGetRandomNumberOfPlanets(List<GameObject> planets, int min, int max)
     {
-        Debug.Log("GetRandomNumberOfPlanets");
+        // Debug.Log("GetRandomNumberOfPlanets");
         int maxPlanetTypes = 2; // There are only 3 different types of planets at the moment
         int numPlanets = Random.Range(min, max + 1); // randomly choose int between [min, max]
         Debug.Log("numPlanets = " + numPlanets);
 
-        // List<GameObject> createdPlanets = new List<GameObject>();
+        List<GameObject> createdPlanets = new List<GameObject>();
         // Add planet0 always?
         GameObject planet0 = planets.Find(o => o.name == "Planet0");
-        Instantiate(
+        GameObject basePlanet = Instantiate(
             planet0,
             new Vector3(0.0F, 0.0F, 0.0F),
             new Quaternion(0.0F, 0.0F, 0.0F, 0.0F)
         );
-        Debug.Log("EARTH = " + planet0);
-        // createdPlanets.Add(basePlanet);
+        // Debug.Log("EARTH = " + planet0);
+        createdPlanets.Add(basePlanet);
         
         for (int x = 1; x <= numPlanets; x++)
         {
             int planetType = Random.Range(1, maxPlanetTypes + 1); // randomly choose int between [1, maxPlanetTypes]
-            Debug.Log("planetType = " + planetType);
+            // Debug.Log("planetType = " + planetType);
         
             // TODO: randomly choose location AND rotation
             GameObject planet = Instantiate(
@@ -66,14 +70,14 @@ public class Level1 : MonoBehaviour
                 new Vector3(0.0F + (x * 20), 0.0F + (x * 15), 0.0F),
                 new Quaternion(0.0F + (x * 60), 0.0F + (x * 20), 0.0F + (x * 90), 0.0F)
             );
-            Debug.Log("planet = " + planet);
-        
-        
-            // createdPlanets.Add(planet);
+            // GameObject generatedPlanet = planet;
+            // generatedPlanet.transform.position = new Vector3(200, 200, 200);
+
+            createdPlanets.Add(planet);
             // SceneManager.MoveGameObjectToScene(planet, predictionScene);
         }
     
-        // return planets;
+        return planets;
     }
 
     public static GameObject PickPlanet(List<GameObject> planets, int planetType)

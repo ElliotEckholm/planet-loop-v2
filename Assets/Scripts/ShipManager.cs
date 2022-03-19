@@ -6,7 +6,7 @@ using UnityEngine;
 public class ShipManager : MonoBehaviour
 {
 
-    public static List<GameObject> planets = new List<GameObject>();
+    public static GameObject[] planets;
     // Objects to add from Editor
     public GameObject ship;
 
@@ -50,7 +50,7 @@ public class ShipManager : MonoBehaviour
         
         if (Input.GetMouseButton(0) && !PanelPlayUI.buttonEntered)
         {
-            GameObject earth = planets.Find(o => o.name == "Planet0");
+            GameObject earth = planets[0];
             ShipHelper.rotateShip(ship, earth);
         }
         
@@ -82,7 +82,7 @@ public class ShipManager : MonoBehaviour
         // Add force towards Planet0 in order to land on it
         if (ship != null && landing)
         {
-            GameObject earth = planets.Find(o => o.name == "Planet0");
+            GameObject earth = planets[0];
             Vector3 earthPosition = earth.transform.position;
 
             Vector3 direction = (earthPosition - ship.transform.position).normalized;
@@ -131,7 +131,7 @@ public class ShipManager : MonoBehaviour
         // Stop rocket
         shipBody.velocity = new Vector3(0, 0, 0);
         // Point towards earth
-        Vector3 earthPosition = planets.Find(o => o.name == "Planet0").transform.position;
+        Vector3 earthPosition = planets[0].transform.position;
         shipBody.transform.LookAt(earthPosition);
 
         // Flip ship around so "butt" is facing earth

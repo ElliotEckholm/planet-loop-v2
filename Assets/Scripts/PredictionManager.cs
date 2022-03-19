@@ -8,7 +8,7 @@ public class PredictionManager : MonoBehaviour
     public GameObject realShip;
     public GameObject fakeShipVariant;
     private GameObject fakeShip;
-    List<GameObject> planets = new List<GameObject>();
+    private GameObject[] planets;
     
     // public GameObject planet0;
     // public GameObject planet1;
@@ -26,7 +26,7 @@ public class PredictionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        planets = GameManager.currentLevelObjects;
+        // planets = GameManager.currentLevelObjects;
 
         predicitionSceneName = "prediction";
         CreateSceneParameters parameters = new CreateSceneParameters(LocalPhysicsMode.Physics3D);
@@ -43,7 +43,7 @@ public class PredictionManager : MonoBehaviour
         
         if (GameManager.Level == 1)
         {
-            Level1.SetupLevel(GameManager.currentLevelObjects);
+            planets = GameManager.currentLevelObjects;
         }
     }
 
@@ -57,8 +57,7 @@ public class PredictionManager : MonoBehaviour
 
         if (fakeShip)
         {
-            // TODO undo this!!
-            // ShipHelper.applyPlanetForces(fakeShip, planets);
+            ShipHelper.applyPlanetForces(fakeShip, planets);
 
             // Angle ship to forward direction of ship's velocity
             Vector3 shipVelocity = fakeShip.GetComponent<Rigidbody>().velocity;
