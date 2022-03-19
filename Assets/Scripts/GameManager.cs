@@ -171,6 +171,11 @@ public class GameManager : MonoBehaviour
         MagnitudeSlider.Reset();
         Destroy(GameObject.Find("Ship"));
         LandButton.landButtonClicked = false;
+        GameObject[] levelObjects = GameObject.FindGameObjectsWithTag("planetObject");
+        foreach (var levelObject in levelObjects)
+        {
+            Destroy(levelObject);
+        }
 
     }
 
@@ -216,7 +221,7 @@ public class GameManager : MonoBehaviour
                 break;
             case State.LOADLEVEL:
                 Reset();
-                currentLevelObjects = null;//new List<GameObject>();
+                currentLevelObjects = null;
                 List<GameObject> levelObjects = new List<GameObject>();
 
                 if (Level >= levels.Length)

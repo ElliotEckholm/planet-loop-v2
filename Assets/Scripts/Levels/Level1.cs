@@ -61,14 +61,21 @@ public class Level1 : MonoBehaviour
         
         for (int x = 1; x <= numPlanets; x++)
         {
-            int planetType = Random.Range(1, maxPlanetTypes + 1); // randomly choose int between [1, maxPlanetTypes]
+            int planetType = Random.Range(0, maxPlanetTypes + 1); // randomly choose int between [1, maxPlanetTypes]
             // Debug.Log("planetType = " + planetType);
         
             // TODO: randomly choose location AND rotation
+            int randomX = Random.Range(-10, 50);
+            int randomY = Random.Range(-20, 20);
+
+            int randomRX = Random.Range(0, 360);
+            int randomRY = Random.Range(0, 360);
+            int randomRZ = Random.Range(0, 360);
+
             GameObject planet = Instantiate(
                 PickPlanet(planets, planetType),
-                new Vector3(0.0F + (x * 20), 0.0F + (x * 15), 0.0F),
-                new Quaternion(0.0F + (x * 60), 0.0F + (x * 20), 0.0F + (x * 90), 0.0F)
+                new Vector3(0.0F + (x * randomX), 0.0F + (x * randomY), 0.0F),
+                new Quaternion(randomRX, randomRY, randomRZ, 0.0F)
             );
             // GameObject generatedPlanet = planet;
             // generatedPlanet.transform.position = new Vector3(200, 200, 200);
