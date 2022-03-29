@@ -84,10 +84,6 @@ public class ShipHelper : MonoBehaviour
         //apply spherical gravity to selected objects (set the objects in editor)
         foreach (GameObject planet in planets)
         {
-            // Debug.Log("applyPlanetForces planet = " + planet);
-            // Debug.Log("applyPlanetForces planet = " + planet.transform.position);
-
-
             // calculate direction of force: toward the planet
             Vector3 direction = (planet.transform.position - ship.transform.position).normalized;
             // calculate magnitude: gravitationalConstant * shipMass * planetMass
@@ -99,8 +95,6 @@ public class ShipHelper : MonoBehaviour
                                      Math.Pow(planet.transform.position.y - ship.transform.position.y, 2), 0.05);
 
             Vector3 force = direction * (magnitude / (float) radius);
-
-
             ship.GetComponent<Rigidbody>().AddForce(force);
         }
     }
