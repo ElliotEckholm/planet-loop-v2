@@ -19,7 +19,7 @@ public class Level1 : MonoBehaviour
 
     public static void SetupLevel(List<GameObject> planets)
     {
-        CreateAndGetRandomNumberOfPlanets(planets, 2,5);
+        CreateRandomNumberOfPlanets(planets, 1, 2);
         // foreach (var planet in randomlyGeneratedPlanets)
         // {
         //     Debug.Log("planet position = " + planet.transform.position);
@@ -41,12 +41,10 @@ public class Level1 : MonoBehaviour
         // GameObject.Find("Planet2(Clone)").transform.RotateAround(GameObject.Find("Planet1(Clone)").transform.position, planet2OrbitAixs, 50 * Time.deltaTime);
     }
 
-    public static List<GameObject> CreateAndGetRandomNumberOfPlanets(List<GameObject> planets, int min, int max)
+    public static void CreateRandomNumberOfPlanets(List<GameObject> planets, int min, int max)
     {
-        // Debug.Log("GetRandomNumberOfPlanets");
         int maxPlanetTypes = 2; // There are only 3 different types of planets at the moment
         int numPlanets = Random.Range(min, max + 1); // randomly choose int between [min, max]
-        Debug.Log("numPlanets = " + numPlanets);
 
         List<GameObject> createdPlanets = new List<GameObject>();
         // Add planet0 always?
@@ -56,35 +54,66 @@ public class Level1 : MonoBehaviour
             new Vector3(0.0F, 0.0F, 0.0F),
             new Quaternion(0.0F, 0.0F, 0.0F, 0.0F)
         );
-        // Debug.Log("EARTH = " + planet0);
         createdPlanets.Add(basePlanet);
-        
+
         for (int x = 1; x <= numPlanets; x++)
         {
             int planetType = Random.Range(0, maxPlanetTypes + 1); // randomly choose int between [1, maxPlanetTypes]
-            // Debug.Log("planetType = " + planetType);
-        
-            // TODO: randomly choose location AND rotation
-            int randomX = Random.Range(-10, 50);
-            int randomY = Random.Range(-20, 20);
+            // Randomly choose a X and Y that is not within N radius of any other created planets
+            List<float> radiusToPlanetsList = new List<float>();
+            int randomX = 0;
+            int randomY = 0;
+            
+            // if all planets created so far are not far enough away from each other
+            while (radiusToPlanetsList.Count != createdPlanets.Count)
+            {
+                
+                radiusToPlanetsList.Clear();
+                Debug.Log("============");
+                foreach (GameObject createdPlanet in createdPlanets)
+                {
+                    // GameObject mostRecentlyCreatedPlanet = createdPlanets.LastOrDefault();
+                    randomX = Random.Range(-15, 70);
+                    randomY = Random.Range(-20, 20);
+                    float radius = Vector2.Distance(
+                        new Vector2(createdPlanet.transform.position.x, createdPlanet.transform.position.y),
+                        new Vector2(randomX, randomY));
+                    if (radius > 30)
+                    {
+                        Debug.Log(" planet = " + createdPlanet.name);
+                        radiusToPlanetsList.Add(radius);
+                    }
+                }
+                
+                // Debug.Log("createdPlanets first = " + createdPlanets.FirstOrDefault().name);
+                // Debug.Log("createdPlanets first planet radius = " + createdPlanets.FirstOrDefault().GetComponent<SphereCollider>().radius);
+                // Debug.Log("createdPlanets first planet pos = " + createdPlanets.FirstOrDefault().transform.position);
 
+                // Debug.Log("createdPlanets.Count = " + createdPlanets.Count);
+                // Debug.Log("radiusToPlanetsList.Count = " + radiusToPlanetsList.Count);
+
+                foreach (float radius in radiusToPlanetsList)
+                {
+                    Debug.Log(" radius = " + radius);
+                }
+            }
+
+            // Randomly choose rotation
             int randomRX = Random.Range(0, 360);
             int randomRY = Random.Range(0, 360);
             int randomRZ = Random.Range(0, 360);
+            Quaternion randomRotation = new Quaternion(randomRX, randomRY, randomRZ, 0.0F);
+            
+            GameObject randomPlanet = PickPlanet(planets, planetType);
 
+            Vector3 randomPosition = new Vector3(randomX,  randomY, 0.0F);
             GameObject planet = Instantiate(
-                PickPlanet(planets, planetType),
-                new Vector3(0.0F + (x * randomX), 0.0F + (x * randomY), 0.0F),
-                new Quaternion(randomRX, randomRY, randomRZ, 0.0F)
+                randomPlanet,
+                randomPosition,
+                randomRotation
             );
-            // GameObject generatedPlanet = planet;
-            // generatedPlanet.transform.position = new Vector3(200, 200, 200);
-
             createdPlanets.Add(planet);
-            // SceneManager.MoveGameObjectToScene(planet, predictionScene);
         }
-    
-        return planets;
     }
 
     public static GameObject PickPlanet(List<GameObject> planets, int planetType)
