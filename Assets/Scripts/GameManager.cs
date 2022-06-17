@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -16,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject panelGameOver;
     public GameObject[] levels;
     public GameObject[] allPlanets;
+    public GameObject winZone;
     public static GameObject[] currentLevelObjects;
 
     public static bool isGameOver = false;
@@ -159,6 +157,7 @@ public class GameManager : MonoBehaviour
         LandZoneCollider.Reset();
         WinZoneCollider.Reset();
         ShipManager.shipLanded = false;
+        ShipManager.landing = false;
         ShipManager.shipCollision = false;
         ShipHelper.ResetAngle();
         IsGamePaused = false;
@@ -175,6 +174,11 @@ public class GameManager : MonoBehaviour
         foreach (var levelObject in levelObjects)
         {
             Destroy(levelObject);
+        }
+        GameObject[] winZones = GameObject.FindGameObjectsWithTag("winZone");
+        foreach (var winZoneOld in winZones)
+        {
+            Destroy(winZoneOld);
         }
 
     }
@@ -237,16 +241,9 @@ public class GameManager : MonoBehaviour
                     {
                         levelObjects.Add(planet);
                     }
-                    Level1.SetupLevel(levelObjects);
-                    // currentLevelObjects = allPlanets;
+                    Level1.SetupLevel(levelObjects, winZone);
                     currentLevelObjects = GameObject.FindGameObjectsWithTag("planetObject");
-                    
-                    // foreach (var o in test)
-                    // {
-                    //     Debug.Log("GAME MANAGER = " + o.transform.position);
-                    // }
                 }
-
                 break;
             case State.GAMEOVER:
                 panelGameOver.SetActive(true);

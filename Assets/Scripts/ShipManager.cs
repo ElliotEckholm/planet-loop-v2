@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ public class ShipManager : MonoBehaviour
 
     // TOOD: reset this on restart
     public static bool applyPlanetForces = true;
-    bool landing = false;
+    public static bool landing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -140,6 +141,15 @@ public class ShipManager : MonoBehaviour
         LandButton.landButtonClicked = false;
         landing = true;
 
+        // Wait for N seconds before setting shipLanded = true
+        // This allows player to watch the ship land and not show the LevelCompleted immediately
+        StartCoroutine(waitForShipToLand());
+    }
+
+    IEnumerator waitForShipToLand()
+    {
+        //Wait for 4 seconds
+        yield return new WaitForSeconds(1.5F);
         shipLanded = true;
     }
 

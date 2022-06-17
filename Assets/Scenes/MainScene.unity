@@ -747,6 +747,7 @@ MonoBehaviour:
   - {fileID: 4999768460823469000, guid: 846ff44e6309d405c82e4399a4a14f7d, type: 3}
   - {fileID: 8488347384942417581, guid: a1f855a0c972444aebc9d3bd59efb046, type: 3}
   - {fileID: 3785172504363642317, guid: b8482f06fbfdf4c9e91708240fcd8972, type: 3}
+  winZone: {fileID: 9055197891082708346, guid: 45352f324d9e742d0bedb9905daee849, type: 3}
 --- !u!4 &1494253686
 Transform:
   m_ObjectHideFlags: 0
