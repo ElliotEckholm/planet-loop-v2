@@ -1,32 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Level1 : MonoBehaviour
 {
-    public GameObject winZone;
-    int numWinZonesCreated = 0;
-    public int numWinZonesCompleted = 0;
+    public static int numWinZonesNeededToWin;
 
 
     public void FixedUpdate()
     {
         // TODO: ALSO check that all winZones randomly created were completed
-        if (ShipManager.shipLanded)
+        if (ShipManager.shipLanded && WinZoneCollider.numWinZonesHit >= numWinZonesNeededToWin)
         {
             GameManager.LevelComplete = true;
+            WinZoneCollider.numWinZonesHit = 0;
         }
     }
 
     public static void SetupLevel(List<GameObject> planets, GameObject winZone)
     {
         CreateRandomNumberOfPlanets(planets, winZone, 2, 2);
-        // foreach (var planet in randomlyGeneratedPlanets)
-        // {
-        //     Debug.Log("planet position = " + planet.transform.position);
-        //
-        // }
-        // return randomlyGeneratedPlanets;
         // Make Moon1 orbit Planet0
         // Vector3 moon1OrbitAixs = new Vector3(0, 0, 0.1f);
         // GameObject.Find("Moon1").transform.RotateAround(GameObject.Find("Planet0").transform.position, moon1OrbitAixs, 100 * Time.deltaTime);
@@ -46,6 +41,9 @@ public class Level1 : MonoBehaviour
     {
         int maxPlanetTypes = 2; // There are only 3 different types of planets at the moment
         int numPlanets = Random.Range(min, max + 1); // randomly choose int between [min, max]
+        // TODO: For now add win zone to every planet
+        // TODO Randomly choose radius of green zones
+        numWinZonesNeededToWin = numPlanets;
 
         List<GameObject> createdPlanets = new List<GameObject>();
         // Add Planet0 (i.e. Earth) always since that is the launching point 

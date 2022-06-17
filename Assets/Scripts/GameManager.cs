@@ -180,6 +180,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(winZoneOld);
         }
+        WinZoneCollider.numWinZonesHit = 0;
 
     }
 
