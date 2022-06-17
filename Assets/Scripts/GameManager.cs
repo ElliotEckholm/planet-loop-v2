@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
     {
         Destroy(_currentLevel);
         LoadLevel();
-        Level++;
+        Level = 1;
         SwitchState(State.INIT);
     }
 
@@ -169,6 +169,8 @@ public class GameManager : MonoBehaviour
         ShipManager.applyPlanetForces = true;
         MagnitudeSlider.Reset();
         Destroy(GameObject.Find("Ship"));
+        Destroy(GameObject.Find("FakeShip"));
+
         LandButton.landButtonClicked = false;
         GameObject[] levelObjects = GameObject.FindGameObjectsWithTag("planetObject");
         foreach (var levelObject in levelObjects)
@@ -221,6 +223,7 @@ public class GameManager : MonoBehaviour
                 panelPlay.SetActive(true);
                 break;
             case State.LEVELCOMPLETED:
+                Reset();
                 panelPlay.SetActive(false);
                 panelLevelCompleted.SetActive(true);
                 break;
