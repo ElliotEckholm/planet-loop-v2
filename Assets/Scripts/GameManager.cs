@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] allPlanets;
     public GameObject winZone;
     public static GameObject[] currentLevelObjects;
+    public static bool restartSameLevel = false;
 
     public static bool isGameOver = false;
 
@@ -72,13 +73,7 @@ public class GameManager : MonoBehaviour
         IsGamePaused = false;
     }
 
-    public void NextLevelClicked()
-    {
-        Destroy(_currentLevel);
-        LoadLevel();
-        Level = 1;
-        SwitchState(State.INIT);
-    }
+   
 
     public void MenuClicked()
     {
@@ -94,7 +89,7 @@ public class GameManager : MonoBehaviour
     public void LoadLevel()
     {
         predictionManager = GameObject.FindGameObjectWithTag("PredictionManager").GetComponent<PredictionManager>();
-        SceneManager.UnloadSceneAsync(predictionManager.predicitionSceneName);
+        SceneManager.UnloadScene(predictionManager.predicitionSceneName);
        
     }
 
@@ -105,10 +100,15 @@ public class GameManager : MonoBehaviour
         {
             Destroy(_currentLevel);
         }
-
         LoadLevel();
-        Reset();
-        SwitchState(State.LOADLEVEL);
+        RestartSameLevel();
+        _currentLevel = Instantiate(levels[Level]);
+        panelPlay.SetActive(true);
+        _state = State.LOADLEVEL;
+        // restartClicked = false;
+
+        // SwitchState(State.INIT);
+
     }
 
     public void RestartFromLose()
@@ -118,9 +118,22 @@ public class GameManager : MonoBehaviour
         {
             Destroy(_currentLevel);
         }
-
         LoadLevel();
-        Reset();
+        RestartSameLevel();
+        _currentLevel = Instantiate(levels[Level]);
+        panelPlay.SetActive(true);
+        panelGameOver.SetActive(false);
+        _state = State.LOADLEVEL;
+        // restartClicked = false;
+
+        // SwitchState(State.INIT);
+    }
+    
+    public void NextLevelClicked()
+    {
+        Destroy(_currentLevel);
+        LoadLevel();
+        Level = 1;
         SwitchState(State.INIT);
     }
 
@@ -185,6 +198,41 @@ public class GameManager : MonoBehaviour
         WinZoneCollider.numWinZonesHit = 0;
 
     }
+    
+    public void RestartSameLevel()
+    {
+        // restartClicked = false;
+        LandZoneCollider.Reset();
+        WinZoneCollider.Reset();
+        ShipManager.shipLanded = false;
+        ShipManager.landing = false;
+        ShipManager.shipCollision = false;
+        ShipHelper.ResetAngle();
+        IsGamePaused = false;
+        isGameOver = false;
+        PanelPlayUI.buttonEntered = false;
+        LaunchButton.launchButtonClicked = false;
+        LaunchButton.launchButtonClickedFirstTime = false;
+        LevelComplete = false;
+        ShipManager.applyPlanetForces = true;
+        MagnitudeSlider.Reset();
+        Destroy(GameObject.Find("Ship"));
+        Destroy(GameObject.Find("FakeShip"));
+
+        LandButton.landButtonClicked = false;
+        // GameObject[] levelObjects = GameObject.FindGameObjectsWithTag("planetObject");
+        // foreach (var levelObject in levelObjects)
+        // {
+        //     Destroy(levelObject);
+        // }
+        // GameObject[] winZones = GameObject.FindGameObjectsWithTag("winZone");
+        // foreach (var winZoneOld in winZones)
+        // {
+        //     Destroy(winZoneOld);
+        // }
+        WinZoneCollider.numWinZonesHit = 0;
+
+    }
 
     // private void Start()
     // {
@@ -228,7 +276,15 @@ public class GameManager : MonoBehaviour
                 panelLevelCompleted.SetActive(true);
                 break;
             case State.LOADLEVEL:
-                Reset();
+                // if (restartSameLevel)
+                // {
+                //     RestartSameLevel();
+                // }
+                // else
+                // {
+                    Reset();
+                // }
+                
                 currentLevelObjects = null;
                 List<GameObject> levelObjects = new List<GameObject>();
 
@@ -245,7 +301,11 @@ public class GameManager : MonoBehaviour
                     {
                         levelObjects.Add(planet);
                     }
-                    Level1.SetupLevel(levelObjects, winZone);
+                    
+                    // if (!restartSameLevel)
+                    // {
+                        Level1.SetupLevel(levelObjects, winZone);
+                    // }
                     currentLevelObjects = GameObject.FindGameObjectsWithTag("planetObject");
                 }
                 break;
@@ -268,6 +328,13 @@ public class GameManager : MonoBehaviour
             case State.INIT:
                 break;
             case State.PLAY:
+                // if (_currentLevel != null && !_isSwitchingState && LevelComplete)
+                // {
+                //     SwitchState(State.LEVELCOMPLETED);
+                //     Reset();
+                // }
+
+               
                 break;
             case State.LEVELCOMPLETED:
                 break;
@@ -281,6 +348,7 @@ public class GameManager : MonoBehaviour
                 if (_currentLevel != null && !_isSwitchingState && isGameOver)
                 {
                     SwitchState(State.GAMEOVER, 0.5F);
+                    // Reset();
                 }
 
                 break;

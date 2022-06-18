@@ -55,7 +55,7 @@ public class PredictionManager : MonoBehaviour
         
         DestroyFakeShipAtExpiration();
 
-        if (fakeShip)
+        if (fakeShip != null && planets != null)
         {
             ShipHelper.applyPlanetForces(fakeShip, planets);
 
