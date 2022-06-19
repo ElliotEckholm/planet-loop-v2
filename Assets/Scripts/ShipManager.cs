@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class ShipManager : MonoBehaviour
 {
-
     public static GameObject[] planets;
+
     // Objects to add from Editor
     public GameObject ship;
 
@@ -26,51 +26,48 @@ public class ShipManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         planets = GameManager.currentLevelObjects;
         // Debug.Log("ShipManager START planets[0] = " + planets[0]);
 
         shipCollision = false;
         fakeShipCollision = false;
-        
+
         ship.GetComponent<Rigidbody>().transform.forward = new Vector3(1, 0, 0);
         ship.GetComponent<Rigidbody>().constraints =
-                RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ |
-                RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionX |
-                RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY;
+            RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ |
+            RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionX |
+            RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY;
     }
 
     // Update is called once per frame
     void Update()
     {
         ShipHelper.isGamePaused();
-        
-        
     }
 
     void FixedUpdate()
     {
-        
         if (!LaunchButton.launchButtonClickedFirstTime && ship != null)
         {
             ShipHelper.calculateLaunchAngle(ship);
             ShipHelper.calculateLaunchForce();
         }
-        
-        if (Input.GetMouseButton(0) && !PanelPlayUI.buttonEntered)
-        {
-            // Debug.Log("ShipManager UPDATE planets[0] = " + GameManager.currentLevelObjects[0]);
 
+        if (Input.GetMouseButton(0) && !PanelPlayUI.buttonEntered && !LaunchButton.launchButtonClickedFirstTime)
+        {
             GameObject earth = GameManager.currentLevelObjects[0];
             ShipHelper.rotateShip(ship, earth);
         }
 
-        
-        if(ship != null && !ship.GetComponent<Renderer>().isVisible){
-            GameManager.isGameOver = true;
-            shipCollision = true;
-        }
-        
+
+        if (ship != null)
+            if ((ship.transform.position.x <= Level1.screenXMin || ship.transform.position.x >= Level1.screenXMax) ||
+                (ship.transform.position.y <= Level1.screenYMin || ship.transform.position.y >= Level1.screenYMax))
+            {
+                GameManager.isGameOver = true;
+                shipCollision = true;
+            }
+
         if (ship != null && LandButton.landButtonClicked)
         {
             // If ship is within land zone, then land ship
@@ -100,39 +97,37 @@ public class ShipManager : MonoBehaviour
 
             ship.GetComponent<Rigidbody>().AddForce(force);
         }
-        
+
         if (ship != null && LaunchButton.launchButtonClicked)
         {
             ship.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             ShipHelper.launchShip(ship);
             LaunchButton.launchButtonClicked = false;
         }
-        
+
 
         if (ship != null && LaunchButton.launchButtonClickedFirstTime && applyPlanetForces)
         {
             ship.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-            
+
             ShipHelper.applyPlanetForces(ship, planets);
         }
-        
-        
+
 
         if (ship != null && !landing)
         {
             // Angle ship to forward direction of ship's velocity
             // e.g. make ship face the correct way
             Vector3 shipVelocity = ship.GetComponent<Rigidbody>().velocity;
-            if (shipVelocity != new Vector3(0,0,0))
+            if (shipVelocity != new Vector3(0, 0, 0))
             {
                 ship.GetComponent<Rigidbody>().transform.forward = shipVelocity;
             }
         }
-        
-        
     }
 
-    void LandShip() {
+    void LandShip()
+    {
         Rigidbody shipBody = ship.GetComponent<Rigidbody>();
         applyPlanetForces = false;
         // Stop rocket
@@ -143,7 +138,7 @@ public class ShipManager : MonoBehaviour
 
         // Flip ship around so "butt" is facing earth
         shipBody.transform.RotateAround(shipBody.transform.position, shipBody.transform.right, 180f);
-            
+
         LandButton.landButtonClicked = false;
         landing = true;
 
@@ -158,5 +153,4 @@ public class ShipManager : MonoBehaviour
         yield return new WaitForSeconds(1.5F);
         shipLanded = true;
     }
-
 }

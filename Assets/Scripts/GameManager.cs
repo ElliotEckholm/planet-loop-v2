@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
         panelPauseMenu.SetActive(false);
         panelPlay.SetActive(true);
         IsGamePaused = false;
+        PanelPlayUI.buttonEntered = false;
     }
 
    

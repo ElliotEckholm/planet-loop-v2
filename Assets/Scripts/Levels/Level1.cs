@@ -126,7 +126,7 @@ public class Level1 : MonoBehaviour
         {
             predicates.Clear();
             // Randomly choose a X and Y
-            randomX = Random.Range(screenXMin + 15, screenXMax - 15);
+            randomX = Random.Range(screenXMin + 20, screenXMax - 20);
             randomY = Random.Range(screenYMin + 20, screenYMax - 20);
 
             // Loop through each planet created so far and construct a predicate array that says whether 
