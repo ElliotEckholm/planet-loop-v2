@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1002,6 +1002,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 345255030}
     m_Modifications:
+    - target: {fileID: 577073607771351343, guid: d8e2965303bf54499b469b0c4f1be215,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 577073608407517382, guid: d8e2965303bf54499b469b0c4f1be215,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 4201805568507660181, guid: d8e2965303bf54499b469b0c4f1be215,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -150
+      objectReference: {fileID: 0}
     - target: {fileID: 4201805570093213891, guid: d8e2965303bf54499b469b0c4f1be215,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1011,6 +1026,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976566423505034654, guid: d8e2965303bf54499b469b0c4f1be215,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 5976566423505034655, guid: d8e2965303bf54499b469b0c4f1be215,
         type: 3}
@@ -1022,6 +1042,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1494253685}
+    - target: {fileID: 5976566423599728597, guid: d8e2965303bf54499b469b0c4f1be215,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 160
+      objectReference: {fileID: 0}
     - target: {fileID: 5976566424022874762, guid: d8e2965303bf54499b469b0c4f1be215,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1526,6 +1551,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: PanelGameOver
       objectReference: {fileID: 0}
+    - target: {fileID: 7986773439753659883, guid: 14d9fbe0195bc4b098673bc8c598727b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7986773440793587556, guid: 14d9fbe0195bc4b098673bc8c598727b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 120
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14d9fbe0195bc4b098673bc8c598727b, type: 3}
 --- !u!1001 &8384716871889022190
@@ -1633,7 +1668,7 @@ PrefabInstance:
     - target: {fileID: 8384716871691373448, guid: 47175ab3f073943ada7cd32e611a6e40,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 191
+      value: 160
       objectReference: {fileID: 0}
     - target: {fileID: 8384716871691373448, guid: 47175ab3f073943ada7cd32e611a6e40,
         type: 3}
