@@ -6,10 +6,16 @@ public class LandZoneCollider : MonoBehaviour
     public static string landZoneName;
     public static string colliderName;
     private Color landColor = new Color(1,1,0,0.6f);
+    private Color defaultColor = new Color(1,0.878f,0,0.1567f);
 
     private void Update()
     {
         TurnLandZoneSolidGreen();
+        
+        if (GameManager.restartClicked)
+        {
+            GetComponent<MeshRenderer>().material.SetColor("_BaseColor", defaultColor);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

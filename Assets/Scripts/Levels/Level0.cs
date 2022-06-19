@@ -12,7 +12,6 @@ public class Level0 : MonoBehaviour
             StartCoroutine(waiter());
         }
     }
-
     
     IEnumerator waiter()
     {
@@ -22,12 +21,12 @@ public class Level0 : MonoBehaviour
 
     public static void SetupLevel()
     {
-        // Make Moon1 orbit Earth
+        // Make Moon1 orbit Planet0
         Vector3 moon1OrbitAixs = new Vector3(0, 0, 0.1f);
-        GameObject.Find("Moon1").transform.RotateAround(GameObject.Find("Earth").transform.position, moon1OrbitAixs, 100 * Time.deltaTime);
-        GameObject.Find("Moon1(Clone)").transform.RotateAround(GameObject.Find("Earth(Clone)").transform.position, moon1OrbitAixs, 100 * Time.deltaTime);
+        GameObject.Find("Moon1").transform.RotateAround(GameObject.Find("Planet0").transform.position, moon1OrbitAixs, 100 * Time.deltaTime);
+        GameObject.Find("Moon1(Clone)").transform.RotateAround(GameObject.Find("Planet0(Clone)").transform.position, moon1OrbitAixs, 100 * Time.deltaTime);
         
-        //// Rotate Planet1
+        // Rotate Planet1
         GameObject.Find("Planet1").transform.Rotate(0, 0, 1);
         GameObject.Find("Planet1(Clone)").transform.Rotate(0, 0, 1);
         
@@ -36,5 +35,4 @@ public class Level0 : MonoBehaviour
         GameObject.Find("Planet2").transform.RotateAround(GameObject.Find("Planet1").transform.position, planet2OrbitAixs, 50 * Time.deltaTime);
         GameObject.Find("Planet2(Clone)").transform.RotateAround(GameObject.Find("Planet1(Clone)").transform.position, planet2OrbitAixs, 50 * Time.deltaTime);
     }
-
 }

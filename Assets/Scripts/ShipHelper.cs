@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 
 public class ShipHelper : MonoBehaviour
@@ -45,12 +46,10 @@ public class ShipHelper : MonoBehaviour
             Time.timeScale = 1f;
     }
 
-    public static void rotateShip(GameObject ship)
+    public static void rotateShip(GameObject ship, GameObject planet)
     {
-        if (ship != null)
+        if (ship != null && planet != null)
         {
-            GameObject planet = GameObject.Find("Earth");
-
             Vector3 planetVector = planet.transform.position;
             planetVector = getCurrentMousePosition().GetValueOrDefault() - planetVector;
             
@@ -90,12 +89,12 @@ public class ShipHelper : MonoBehaviour
             // calculate magnitude: gravitationalConstant * shipMass * planetMass
             float magnitude = ship.GetComponent<Rigidbody>().mass * planet.GetComponent<Rigidbody>().mass *
                               ShipManager.gravitationalConstant;
+
             // calculate radius between ship and planet
             double radius = Math.Pow(Math.Pow(planet.transform.position.x - ship.transform.position.x, 2) +
                                      Math.Pow(planet.transform.position.y - ship.transform.position.y, 2), 0.05);
 
             Vector3 force = direction * (magnitude / (float) radius);
-
             ship.GetComponent<Rigidbody>().AddForce(force);
         }
     }

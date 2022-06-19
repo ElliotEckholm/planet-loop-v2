@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - planetObject
+  - levelObject
+  - PredictionManager
+  - ButtonLaunch
+  - winZone
+  - backgroundStar
   layers:
   - Default
   - TransparentFX

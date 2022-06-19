@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -15,7 +13,12 @@ public class GameManager : MonoBehaviour
     public GameObject panelLevelCompleted;
     public GameObject panelGameOver;
     public GameObject[] levels;
+    public GameObject[] allPlanets;
+    public GameObject winZone;
     public static GameObject[] currentLevelObjects;
+    public static bool restartSameLevel = false;
+    public GameObject backGroundStar;
+    List<GameObject> levelObjects;
 
     public static bool isGameOver = false;
 
@@ -71,15 +74,10 @@ public class GameManager : MonoBehaviour
         panelPauseMenu.SetActive(false);
         panelPlay.SetActive(true);
         IsGamePaused = false;
+        PanelPlayUI.buttonEntered = false;
     }
 
-    public void NextLevelClicked()
-    {
-        Destroy(_currentLevel);
-        LoadLevel();
-        Level++;
-        SwitchState(State.INIT);
-    }
+   
 
     public void MenuClicked()
     {
@@ -95,7 +93,7 @@ public class GameManager : MonoBehaviour
     public void LoadLevel()
     {
         predictionManager = GameObject.FindGameObjectWithTag("PredictionManager").GetComponent<PredictionManager>();
-        SceneManager.UnloadSceneAsync(predictionManager.predicitionSceneName);
+        SceneManager.UnloadScene(predictionManager.predicitionSceneName);
        
     }
 
@@ -106,10 +104,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(_currentLevel);
         }
-
         LoadLevel();
-        Reset();
-        SwitchState(State.LOADLEVEL);
+        RestartSameLevel();
+        _currentLevel = Instantiate(levels[Level]);
+        panelPlay.SetActive(true);
+        _state = State.LOADLEVEL;
     }
 
     public void RestartFromLose()
@@ -119,10 +118,49 @@ public class GameManager : MonoBehaviour
         {
             Destroy(_currentLevel);
         }
+        LoadLevel();
+        RestartSameLevel();
+        _currentLevel = Instantiate(levels[Level]);
+        panelPlay.SetActive(true);
+        panelGameOver.SetActive(false);
+        
+        _state = State.LOADLEVEL;
+    }
 
+    public void Start()
+    {
+        levelObjects = new List<GameObject>();
+        foreach (var planet in allPlanets)
+        {
+            levelObjects.Add(planet);
+        }
+    }
+
+    public void NextLevelClicked()
+    {
+        if (_currentLevel != null)
+        {
+            Destroy(_currentLevel);
+        }
         LoadLevel();
         Reset();
-        SwitchState(State.INIT);
+        Level = 1;
+        _currentLevel = Instantiate(levels[Level]);
+
+       
+        List<GameObject> randomlyCreatedPlanets = Level1.SetupLevel(levelObjects, winZone, backGroundStar);
+        // Debug.Log("GAME MANAGER NEXT LVL currentLevelObjects = " + randomlyCreatedPlanets[0]);
+
+        currentLevelObjects = randomlyCreatedPlanets.ToArray();
+        // ShipManager.planets = GameObject.FindGameObjectsWithTag("planetObject");
+
+        panelPlay.SetActive(true);
+        panelLevelCompleted.SetActive(false);
+        panelMenu.SetActive(false);
+        panelPauseMenu.SetActive(false);
+        panelGameOver.SetActive(false);
+
+        _state = State.LOADLEVEL;
     }
 
     public void Level1Clicked()
@@ -158,6 +196,7 @@ public class GameManager : MonoBehaviour
         LandZoneCollider.Reset();
         WinZoneCollider.Reset();
         ShipManager.shipLanded = false;
+        ShipManager.landing = false;
         ShipManager.shipCollision = false;
         ShipHelper.ResetAngle();
         IsGamePaused = false;
@@ -169,11 +208,63 @@ public class GameManager : MonoBehaviour
         ShipManager.applyPlanetForces = true;
         MagnitudeSlider.Reset();
         Destroy(GameObject.Find("Ship"));
+        Destroy(GameObject.Find("FakeShip"));
+
         LandButton.landButtonClicked = false;
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("planetObject");
+        foreach (var levelObject in objects)
+        {
+            Destroy(levelObject);
+        }
+        GameObject[] winZones = GameObject.FindGameObjectsWithTag("winZone");
+        foreach (var winZoneOld in winZones)
+        {
+            Destroy(winZoneOld);
+        }
+        GameObject[] backgroundStars = GameObject.FindGameObjectsWithTag("backgroundStar");
+        foreach (var star in backgroundStars)
+        {
+            Destroy(star);
+        }
+        WinZoneCollider.numWinZonesHit = 0;
+
+    }
+    
+    public void RestartSameLevel()
+    {
+        // restartClicked = false;
+        LandZoneCollider.Reset();
+        WinZoneCollider.Reset();
+        ShipManager.shipLanded = false;
+        ShipManager.landing = false;
+        ShipManager.shipCollision = false;
+        ShipHelper.ResetAngle();
+        IsGamePaused = false;
+        isGameOver = false;
+        PanelPlayUI.buttonEntered = false;
+        LaunchButton.launchButtonClicked = false;
+        LaunchButton.launchButtonClickedFirstTime = false;
+        LevelComplete = false;
+        ShipManager.applyPlanetForces = true;
+        MagnitudeSlider.Reset();
+        Destroy(GameObject.Find("Ship"));
+        Destroy(GameObject.Find("FakeShip"));
+
+        LandButton.landButtonClicked = false;
+        // GameObject[] levelObjects = GameObject.FindGameObjectsWithTag("planetObject");
+        // foreach (var levelObject in levelObjects)
+        // {
+        //     Destroy(levelObject);
+        // }
+        // GameObject[] winZones = GameObject.FindGameObjectsWithTag("winZone");
+        // foreach (var winZoneOld in winZones)
+        // {
+        //     Destroy(winZoneOld);
+        // }
+        WinZoneCollider.numWinZonesHit = 0;
 
     }
 
-   
 
     void BeginState(State newState)
     {
@@ -195,10 +286,10 @@ public class GameManager : MonoBehaviour
                 break;
             case State.INIT:
                 Cursor.visible = true;
-                if (_currentLevel != null)
-                {
-                    Destroy(_currentLevel);
-                }
+                // if (_currentLevel != null)
+                // {
+                //     Destroy(_currentLevel);
+                // }
                 panelPlay.SetActive(true);
                 SwitchState(State.LOADLEVEL);
                 break;
@@ -206,12 +297,18 @@ public class GameManager : MonoBehaviour
                 panelPlay.SetActive(true);
                 break;
             case State.LEVELCOMPLETED:
+                Reset();
                 panelPlay.SetActive(false);
                 panelLevelCompleted.SetActive(true);
                 break;
             case State.LOADLEVEL:
+               
                 Reset();
+             
+                
                 currentLevelObjects = null;
+                List<GameObject> levelObjects = new List<GameObject>();
+
                 if (Level >= levels.Length)
                 {
                     SwitchState(State.GAMEOVER);
@@ -219,9 +316,21 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     _currentLevel = Instantiate(levels[Level]);
+                    
+                    
+                    foreach (var planet in allPlanets)
+                    {
+                        levelObjects.Add(planet);
+                    }
+                    
+                    // if (!restartSameLevel)
+                    // {
+                    // Level1 level1 = new Level1();
+                    Level1.SetupLevel(levelObjects, winZone, backGroundStar);
+                    //.SetupLevel(levelObjects, winZone);
+                    // }
                     currentLevelObjects = GameObject.FindGameObjectsWithTag("planetObject");
                 }
-
                 break;
             case State.GAMEOVER:
                 panelGameOver.SetActive(true);
@@ -242,6 +351,13 @@ public class GameManager : MonoBehaviour
             case State.INIT:
                 break;
             case State.PLAY:
+                // if (_currentLevel != null && !_isSwitchingState && LevelComplete)
+                // {
+                //     SwitchState(State.LEVELCOMPLETED);
+                //     Reset();
+                // }
+
+               
                 break;
             case State.LEVELCOMPLETED:
                 break;
@@ -255,6 +371,7 @@ public class GameManager : MonoBehaviour
                 if (_currentLevel != null && !_isSwitchingState && isGameOver)
                 {
                     SwitchState(State.GAMEOVER, 0.5F);
+                    // Reset();
                 }
 
                 break;
