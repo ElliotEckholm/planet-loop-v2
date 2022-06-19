@@ -6,7 +6,7 @@ public class WinZoneCollider : MonoBehaviour
     public static bool winZoneCollision;
     public static string colliderName;
     private Color winColor = new Color(0,1,0,0.6f);
-    private Color defaultColor = new Color(0,1,0,0.4f);
+    private Color defaultColor = new Color(0,1,0,0.1567f);
 
     public static int numWinZonesHit = 0;
 

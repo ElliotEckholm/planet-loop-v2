@@ -7,7 +7,26 @@ using Random = UnityEngine.Random;
 public class Level1 : MonoBehaviour
 {
     public static int numWinZonesNeededToWin;
+    public static int screenXMin = -40;
+    public static int screenXMax = 140;
+    public static int screenYMin = -50;
+    public static int screenYMax = 50;
 
+    private static void CreateRandomStartBackground(GameObject backGroundStar)
+    {
+        int numBackgroundStarts = 400;
+        for (int x = 1; x <= numBackgroundStarts; x++)
+        {
+            int randomPositionX = Random.Range(screenXMin, screenXMax);
+            int randomPositionY = Random.Range(screenYMin, screenYMax);
+            Vector3 randomPosition = new Vector3(randomPositionX, randomPositionY, -20);
+            Instantiate(
+                backGroundStar,
+                randomPosition,
+                new Quaternion()
+            );
+        }
+    }
 
     public void FixedUpdate()
     {
@@ -19,9 +38,10 @@ public class Level1 : MonoBehaviour
         }
     }
 
-    public static void SetupLevel(List<GameObject> planets, GameObject winZone)
+    public static List<GameObject> SetupLevel(List<GameObject> planets, GameObject winZone, GameObject backgroundStar)
     {
-        CreateRandomNumberOfPlanets(planets, winZone, 2, 2);
+        CreateRandomStartBackground(backgroundStar);
+        List<GameObject> randomlyCreatedPlanets = CreateRandomNumberOfPlanets(planets, winZone, 2, 2);
         // Make Moon1 orbit Planet0
         // Vector3 moon1OrbitAixs = new Vector3(0, 0, 0.1f);
         // GameObject.Find("Moon1").transform.RotateAround(GameObject.Find("Planet0").transform.position, moon1OrbitAixs, 100 * Time.deltaTime);
@@ -35,9 +55,11 @@ public class Level1 : MonoBehaviour
         // Vector3 planet2OrbitAixs = new Vector3(0, 0, 0.1f);
         // GameObject.Find("Planet2").transform.RotateAround(GameObject.Find("Planet1").transform.position, planet2OrbitAixs, 50 * Time.deltaTime);
         // GameObject.Find("Planet2(Clone)").transform.RotateAround(GameObject.Find("Planet1(Clone)").transform.position, planet2OrbitAixs, 50 * Time.deltaTime);
+
+        return randomlyCreatedPlanets;
     }
 
-    public static void CreateRandomNumberOfPlanets(List<GameObject> planets, GameObject winZone, int min, int max)
+    public static List<GameObject> CreateRandomNumberOfPlanets(List<GameObject> planets, GameObject winZone, int min, int max)
     {
         int maxPlanetTypes = 2; // There are only 3 different types of planets at the moment
         int numPlanets = Random.Range(min, max + 1); // randomly choose int between [min, max]
@@ -88,6 +110,8 @@ public class Level1 : MonoBehaviour
             );
             createdPlanets.Add(planet);
         }
+
+        return createdPlanets;
     }
 
     public static Vector3 RandomlyPickPosition(List<GameObject> createdPlanets, List<int> predicates, int planetBeingPlaced)
@@ -102,8 +126,8 @@ public class Level1 : MonoBehaviour
         {
             predicates.Clear();
             // Randomly choose a X and Y
-            randomX = Random.Range(-15, 70);
-            randomY = Random.Range(-20, 20);
+            randomX = Random.Range(screenXMin + 15, screenXMax - 15);
+            randomY = Random.Range(screenYMin + 20, screenYMax - 20);
 
             // Loop through each planet created so far and construct a predicate array that says whether 
             // the planet trying to be placed is a radius >= N from all other already created (and placed) planets 

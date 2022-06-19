@@ -26,8 +26,10 @@ public class ShipManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
         planets = GameManager.currentLevelObjects;
+        // Debug.Log("ShipManager START planets[0] = " + planets[0]);
+
         shipCollision = false;
         fakeShipCollision = false;
         
@@ -43,6 +45,12 @@ public class ShipManager : MonoBehaviour
     {
         ShipHelper.isGamePaused();
         
+        
+    }
+
+    void FixedUpdate()
+    {
+        
         if (!LaunchButton.launchButtonClickedFirstTime && ship != null)
         {
             ShipHelper.calculateLaunchAngle(ship);
@@ -51,14 +59,12 @@ public class ShipManager : MonoBehaviour
         
         if (Input.GetMouseButton(0) && !PanelPlayUI.buttonEntered)
         {
-            GameObject earth = planets[0];
+            // Debug.Log("ShipManager UPDATE planets[0] = " + GameManager.currentLevelObjects[0]);
+
+            GameObject earth = GameManager.currentLevelObjects[0];
             ShipHelper.rotateShip(ship, earth);
         }
-        
-    }
 
-    void FixedUpdate()
-    {
         
         if(ship != null && !ship.GetComponent<Renderer>().isVisible){
             GameManager.isGameOver = true;

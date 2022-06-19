@@ -106,6 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e595afd85b714182985c95dd7085a449, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backGroundStar: {fileID: 2455396481696184375, guid: b515d3790b22b40499edbacea06b901a,
+    type: 3}
 --- !u!1001 &301830052
 PrefabInstance:
   m_ObjectHideFlags: 0

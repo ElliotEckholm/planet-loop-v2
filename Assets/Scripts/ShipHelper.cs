@@ -48,7 +48,7 @@ public class ShipHelper : MonoBehaviour
 
     public static void rotateShip(GameObject ship, GameObject planet)
     {
-        if (ship != null)
+        if (ship != null && planet != null)
         {
             Vector3 planetVector = planet.transform.position;
             planetVector = getCurrentMousePosition().GetValueOrDefault() - planetVector;

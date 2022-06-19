@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +17,8 @@ public class GameManager : MonoBehaviour
     public GameObject winZone;
     public static GameObject[] currentLevelObjects;
     public static bool restartSameLevel = false;
+    public GameObject backGroundStar;
+    List<GameObject> levelObjects;
 
     public static bool isGameOver = false;
 
@@ -105,10 +108,6 @@ public class GameManager : MonoBehaviour
         _currentLevel = Instantiate(levels[Level]);
         panelPlay.SetActive(true);
         _state = State.LOADLEVEL;
-        // restartClicked = false;
-
-        // SwitchState(State.INIT);
-
     }
 
     public void RestartFromLose()
@@ -123,18 +122,44 @@ public class GameManager : MonoBehaviour
         _currentLevel = Instantiate(levels[Level]);
         panelPlay.SetActive(true);
         panelGameOver.SetActive(false);
+        
         _state = State.LOADLEVEL;
-        // restartClicked = false;
-
-        // SwitchState(State.INIT);
     }
-    
+
+    public void Start()
+    {
+        levelObjects = new List<GameObject>();
+        foreach (var planet in allPlanets)
+        {
+            levelObjects.Add(planet);
+        }
+    }
+
     public void NextLevelClicked()
     {
-        Destroy(_currentLevel);
+        if (_currentLevel != null)
+        {
+            Destroy(_currentLevel);
+        }
         LoadLevel();
+        Reset();
         Level = 1;
-        SwitchState(State.INIT);
+        _currentLevel = Instantiate(levels[Level]);
+
+       
+        List<GameObject> randomlyCreatedPlanets = Level1.SetupLevel(levelObjects, winZone, backGroundStar);
+        // Debug.Log("GAME MANAGER NEXT LVL currentLevelObjects = " + randomlyCreatedPlanets[0]);
+
+        currentLevelObjects = randomlyCreatedPlanets.ToArray();
+        // ShipManager.planets = GameObject.FindGameObjectsWithTag("planetObject");
+
+        panelPlay.SetActive(true);
+        panelLevelCompleted.SetActive(false);
+        panelMenu.SetActive(false);
+        panelPauseMenu.SetActive(false);
+        panelGameOver.SetActive(false);
+
+        _state = State.LOADLEVEL;
     }
 
     public void Level1Clicked()
@@ -185,8 +210,8 @@ public class GameManager : MonoBehaviour
         Destroy(GameObject.Find("FakeShip"));
 
         LandButton.landButtonClicked = false;
-        GameObject[] levelObjects = GameObject.FindGameObjectsWithTag("planetObject");
-        foreach (var levelObject in levelObjects)
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("planetObject");
+        foreach (var levelObject in objects)
         {
             Destroy(levelObject);
         }
@@ -194,6 +219,11 @@ public class GameManager : MonoBehaviour
         foreach (var winZoneOld in winZones)
         {
             Destroy(winZoneOld);
+        }
+        GameObject[] backgroundStars = GameObject.FindGameObjectsWithTag("backgroundStar");
+        foreach (var star in backgroundStars)
+        {
+            Destroy(star);
         }
         WinZoneCollider.numWinZonesHit = 0;
 
@@ -234,11 +264,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-    // private void Start()
-    // {
-    //     currentLevelObjects = new List<GameObject>();
-    // }
-
 
     void BeginState(State newState)
     {
@@ -260,10 +285,10 @@ public class GameManager : MonoBehaviour
                 break;
             case State.INIT:
                 Cursor.visible = true;
-                if (_currentLevel != null)
-                {
-                    Destroy(_currentLevel);
-                }
+                // if (_currentLevel != null)
+                // {
+                //     Destroy(_currentLevel);
+                // }
                 panelPlay.SetActive(true);
                 SwitchState(State.LOADLEVEL);
                 break;
@@ -276,14 +301,9 @@ public class GameManager : MonoBehaviour
                 panelLevelCompleted.SetActive(true);
                 break;
             case State.LOADLEVEL:
-                // if (restartSameLevel)
-                // {
-                //     RestartSameLevel();
-                // }
-                // else
-                // {
-                    Reset();
-                // }
+               
+                Reset();
+             
                 
                 currentLevelObjects = null;
                 List<GameObject> levelObjects = new List<GameObject>();
@@ -304,7 +324,9 @@ public class GameManager : MonoBehaviour
                     
                     // if (!restartSameLevel)
                     // {
-                        Level1.SetupLevel(levelObjects, winZone);
+                    // Level1 level1 = new Level1();
+                    Level1.SetupLevel(levelObjects, winZone, backGroundStar);
+                    //.SetupLevel(levelObjects, winZone);
                     // }
                     currentLevelObjects = GameObject.FindGameObjectsWithTag("planetObject");
                 }

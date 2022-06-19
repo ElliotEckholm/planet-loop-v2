@@ -9,6 +9,7 @@ TagManager:
   - PredictionManager
   - ButtonLaunch
   - winZone
+  - backgroundStar
   layers:
   - Default
   - TransparentFX

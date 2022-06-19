@@ -41,10 +41,12 @@ public class PredictionManager : MonoBehaviour
         //     SceneManager.MoveGameObjectToScene(fakePlanet, predictionScene);
         // }
         
-        if (GameManager.Level == 1)
-        {
+        // if (GameManager.Level == 1)
+        // {
+        // Debug.Log(" prediction START planets = " + GameManager.currentLevelObjects[0]);
+
             planets = GameManager.currentLevelObjects;
-        }
+        // }
     }
 
     void FixedUpdate()
@@ -55,8 +57,11 @@ public class PredictionManager : MonoBehaviour
         
         DestroyFakeShipAtExpiration();
 
-        if (fakeShip != null && planets != null)
+        if (fakeShip != null && planets[0] != null)
         {
+            // Debug.Log(" prediction fakeShip = " + fakeShip);
+            // Debug.Log(" prediction planets = " + planets[0]);
+
             ShipHelper.applyPlanetForces(fakeShip, planets);
 
             // Angle ship to forward direction of ship's velocity
@@ -85,11 +90,11 @@ public class PredictionManager : MonoBehaviour
             predict = false;
         }
 
-        // TODO: This is hardcoded for only Level 0. FIX ME
-        if (GameManager.Level == 0)
-        {
-            Level0.SetupLevel();
-        } 
+        // // TODO: This is hardcoded for only Level 0. FIX ME
+        // if (GameManager.Level == 0)
+        // {
+        //     Level0.SetupLevel();
+        // } 
         // else if (GameManager.Level == 1)
         // {
         //     List<GameObject> planets = new List<GameObject>();
