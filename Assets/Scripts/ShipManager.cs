@@ -43,22 +43,27 @@ public class ShipManager : MonoBehaviour
     void Update()
     {
         ShipHelper.isGamePaused();
-    }
-
-    void FixedUpdate()
-    {
+        
         if (!LaunchButton.launchButtonClickedFirstTime && ship != null)
         {
             ShipHelper.calculateLaunchAngle(ship);
             ShipHelper.calculateLaunchForce();
         }
 
-        if (Input.GetMouseButton(0) && !PanelPlayUI.buttonEntered && !LaunchButton.launchButtonClickedFirstTime)
+        if (!PanelPlayUI.buttonEntered && !LaunchButton.launchButtonClickedFirstTime &&
+            !LaunchButton.launchButtonClicked)
         {
-            GameObject earth = GameManager.currentLevelObjects[0];
-            ShipHelper.rotateShip(ship, earth);
+            if (Input.GetMouseButton(0))
+            {
+                GameObject earth = GameManager.currentLevelObjects[0];
+                ShipHelper.rotateShip(ship, earth);
+            }
+           
         }
+    }
 
+    void FixedUpdate()
+    {
 
         if (ship != null)
             if ((ship.transform.position.x <= Level1.screenXMin || ship.transform.position.x >= Level1.screenXMax) ||
